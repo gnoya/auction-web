@@ -1,5 +1,6 @@
 import { Request, Response } from 'express'
 import AppLogger from './logger'
+import { NODE_ENV } from '@/config/env'
 
 const logger = new AppLogger()
 
@@ -13,7 +14,7 @@ export const routeHandler =
       if (!res.headersSent) res.status(status).json({ data, ...rest })
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
-      logger.error(error)
+      NODE_ENV !== 'test' && logger.error(error)
       const internalError = error.hasOwnProperty('status') // eslint-disable-line
         ? (error as { status: number })
         : {

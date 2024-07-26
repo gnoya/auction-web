@@ -79,8 +79,14 @@ export default class AuctionController {
     const { id } = await auctionShowValidator(req)
     const updateData = await auctionUpdateValidator(req)
 
+    // -------- Get the requester userId
+    const myUserId = reqToUserId(req)
+
     // -------- Update the auction
-    const auction = await this.auctionService.updateAuction(id, updateData)
+    const auction = await this.auctionService.updateAuction(id, {
+      ...updateData,
+      userId: myUserId,
+    })
 
     return { status: 200, data: auction }
   }
@@ -122,7 +128,7 @@ export default class AuctionController {
       amount,
     })
 
-    return { status: 200, data: bid }
+    return { status: 201, data: bid }
   }
 
   indexBids = async (

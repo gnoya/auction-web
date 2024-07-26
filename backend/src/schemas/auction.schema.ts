@@ -1,7 +1,6 @@
 import { z } from 'zod'
 
 export const auctionStoreZodSchema = {
-  userId: z.coerce.number(),
   title: z.string(),
   description: z.string(),
   startingPrice: z.coerce.number(),

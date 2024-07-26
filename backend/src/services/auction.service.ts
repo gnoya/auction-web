@@ -1,4 +1,4 @@
-import { ResourceNotFoundError, UnauthorizedError } from '@/errors/common'
+import { ResourceNotFoundError } from '@/errors/common'
 import AuctionRepository from '@/repositories/auction.repository'
 import UserRepository from '@/repositories/user.repository'
 import {
@@ -63,15 +63,20 @@ export default class AuctionService {
 
   updateAuction = async (
     id: number,
-    data: { title?: string; description?: string }
+    data: { title?: string; description?: string; userId: number }
   ) => {
+    const { userId, ...updateData } = data
+
     // -------- Check if the auction exists
     const auction = await this.auctionRepository.show(id)
     if (!auction)
       throw new ResourceNotFoundError(`Auction with id ${id} not found`)
 
+    // -------- Check if the auction belongs to the user
+    await auctionBelongsToUserValidator(auction, userId)
+
     // -------- Update the auction
-    const updatedAuction = await this.auctionRepository.update(id, data)
+    const updatedAuction = await this.auctionRepository.update(id, updateData)
 
     return transformAuction(updatedAuction)
   }
@@ -85,11 +90,7 @@ export default class AuctionService {
       throw new ResourceNotFoundError(`Auction with id ${auctionId} not found`)
 
     // -------- Check if the auction belongs to the user
-    const belongsToUser = await auctionBelongsToUserValidator(auction, userId)
-    if (!belongsToUser)
-      throw new UnauthorizedError(
-        `Your are not authorized to delete auction with id ${auctionId}`
-      )
+    await auctionBelongsToUserValidator(auction, userId)
 
     return this.auctionRepository.delete(auctionId)
   }
