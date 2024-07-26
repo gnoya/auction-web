@@ -1,0 +1,50 @@
+{
+  "compilerOptions": {
+    "rootDir": "./",
+    "baseUrl": "./",
+    "lib": ["es2019", "dom"],
+    "declaration": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noEmitOnError": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "noUnusedParameters": false,
+    "noUnusedLocals": false,
+    "experimentalDecorators": true,
+    "strictNullChecks": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "types": ["node", "jest"],
+    "sourceMap": true,
+    "target": "es2019",
+    "strict": true,
+    "skipLibCheck": true,
+    "paths": {
+      "@/config/*": ["config/*"],
+      "@/controllers/*": ["src/controllers/*"],
+      "@/services/*": ["src/services/*"],
+      "@/middlewares/*": ["src/middlewares/*"],
+      "@/repositories/*": ["src/repositories/*"],
+      "@/transforms/*": ["src/transforms/*"],
+      "@/validators/*": ["src/validators/*"],
+      "@/helpers/*": ["src/helpers/*"],
+      "@/utils/*": ["src/utils/*"],
+      "@/errors/*": ["src/errors/*"],
+      "@/database/*": ["src/database/*"],
+      "@/schemas/*": ["src/schemas/*"],
+      "@/routes/*": ["src/routes/*"],
+      "@/types/*": ["src/types/*"]
+    }
+  },
+  "include": [
+    "src/**/*",
+    "tests/**/*",
+    "cli/**/*",
+    "prisma/**/*",
+    "config/**/*",
+    "app.ts"
+  ],
+  "exclude": []
+}
