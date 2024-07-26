@@ -24,12 +24,12 @@ export default class UserService {
     return transformUser(newUser)
   }
 
-  getUser = async (userId: number) => {
+  getUser = async (userId: number, transform: boolean = true) => {
     // -------- Get the user
     const user = await this.userRepository.show(userId)
     if (!user)
       throw new ResourceNotFoundError(`User with id ${userId} not found`)
 
-    return transformUser(user)
+    return transform ? transformUser(user) : user
   }
 }

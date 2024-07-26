@@ -8,15 +8,73 @@ export default class AuctionController {
     this.auctionService = auctionService
   }
 
+  index = async (
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    req: Request
+  ): Promise<{
+    status: number
+    data: number
+  }> => {
+    return { status: 200, data: 2 }
+  }
+
+  show = async (
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    req: Request
+  ): Promise<{
+    status: number
+    data: number
+  }> => {
+    return { status: 200, data: 2 }
+  }
+
   store = async (
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     req: Request
   ): Promise<{
     status: number
-    data: any // eslint-disable-line @typescript-eslint/no-explicit-any
+    data: number
   }> => {
-    // const auction = await this.auctionService.createAuction()
+    return { status: 201, data: 2 }
+  }
 
-    return { status: 200, data: {} }
+  update = async (
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    req: Request
+  ): Promise<{
+    status: number
+    data: number
+  }> => {
+    return { status: 200, data: 2 }
+  }
+
+  destroy = async (
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    req: Request
+  ): Promise<{
+    status: number
+    data: number
+  }> => {
+    return { status: 200, data: 2 }
+  }
+
+  placeBid = async (
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    req: Request
+  ): Promise<{
+    status: number
+    data: number
+  }> => {
+    return { status: 200, data: 2 }
+  }
+
+  indexBid = async (
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    req: Request
+  ): Promise<{
+    status: number
+    data: number
+  }> => {
+    return { status: 200, data: 2 }
   }
 }

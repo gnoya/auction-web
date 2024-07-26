@@ -8,7 +8,7 @@ export type UserWithRelations = User & {
 }
 export type UserTransformed = Omit<
   User,
-  'auctions' | 'bids' | 'password' | 'jwtSecret'
+  'password' | 'jwtSecret' | 'auctions' | 'bids'
 > & {
   auctions?: AuctionTransformed[]
   bids?: BidTransformed[]
