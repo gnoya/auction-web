@@ -31,11 +31,11 @@ export class BadRequestError extends Error {
 }
 
 export class ResourceNotFoundError extends Error {
-  constructor() {
+  constructor(reason?: string) {
     super({
       status: 404,
       title: 'notFound',
-      detail: 'Requested resource not found',
+      detail: reason || 'Requested resource not found',
     })
   }
 }

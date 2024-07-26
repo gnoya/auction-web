@@ -3,6 +3,8 @@ import cors from 'cors'
 import loggingMiddleware from '@/middlewares/logging.middleware'
 import { appLoggerFactory } from '@/utils/logger'
 import { NODE_ENV, SERVICE_NAME, SERVICE_PORT } from '@/config/env'
+import authRoutes from '@/routes/auth.routes'
+import auctionRoutes from '@/routes/auction.routes'
 
 const app = express()
 
@@ -16,9 +18,11 @@ app.use(cors())
 app.use(loggingMiddleware)
 
 //------------- healthcheck
-app.get('/healthCheck', (req: Request, res: Response) => res.json('ok'))
+app.get('/health-check', (req: Request, res: Response) => res.json('ok'))
 
 //------------- routes
+app.use('/api/auth', authRoutes)
+app.use('/api/auctions', auctionRoutes)
 
 //------------- starting the app
 function start() {

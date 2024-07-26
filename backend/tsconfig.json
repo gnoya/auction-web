@@ -29,11 +29,9 @@
       "@/repositories/*": ["src/repositories/*"],
       "@/transforms/*": ["src/transforms/*"],
       "@/validators/*": ["src/validators/*"],
-      "@/helpers/*": ["src/helpers/*"],
       "@/utils/*": ["src/utils/*"],
       "@/errors/*": ["src/errors/*"],
       "@/database/*": ["src/database/*"],
-      "@/schemas/*": ["src/schemas/*"],
       "@/routes/*": ["src/routes/*"],
       "@/types/*": ["src/types/*"]
     }

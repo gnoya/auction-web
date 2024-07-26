@@ -3,7 +3,7 @@ import { Server, Socket } from 'socket.io'
 
 const logger = new AppLogger()
 
-class SocketIOSingleton {
+export default class SocketIOSingleton {
   private static instance: Server | null = null
 
   constructor(io: Server) {
@@ -25,5 +25,3 @@ class SocketIOSingleton {
     return SocketIOSingleton.instance
   }
 }
-
-export default SocketIOSingleton
