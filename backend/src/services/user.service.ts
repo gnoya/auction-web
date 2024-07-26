@@ -1,4 +1,4 @@
-import { ResourceNotFoundError } from '@/errors/common'
+import { ConflictError, ResourceNotFoundError } from '@/errors/common'
 import UserRepository from '@/repositories/user.repository'
 import { transformUser } from '@/transforms/user.transform'
 
@@ -18,6 +18,10 @@ export default class UserService {
     password: string
     name: string
   }) => {
+    // -------- Check if email is not registered
+    const user = await this.userRepository.showByEmail(data.email)
+    if (user) throw new ConflictError('Email is already registered')
+
     // -------- Create the user
     const newUser = await this.userRepository.create(data)
 

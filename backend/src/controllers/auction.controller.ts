@@ -1,80 +1,142 @@
 import { Request } from 'express'
 import AuctionService from '@/services/auction.service'
+import { auctionShowValidator } from '@/validators/auction/show.validator'
+import { reqToUserId } from '@/utils/jwt'
+import { AuctionTransformed } from '@/transforms/auction.transform'
+import { auctionUpdateValidator } from '@/validators/auction/update.validator'
+import { auctionStoreValidator } from '@/validators/auction/store.validator'
+import BidService from '@/services/bid.service'
+import { BidTransformed } from '@/transforms/bid.transform'
+import { bidStoreValidator } from '@/validators/bid/store.validator'
+
+type AuctionControllerParams = {
+  auctionService?: AuctionService
+  bidService?: BidService
+}
 
 export default class AuctionController {
   private auctionService: AuctionService
+  private bidService: BidService
 
-  constructor(auctionService: AuctionService = new AuctionService()) {
-    this.auctionService = auctionService
+  constructor({ auctionService, bidService }: AuctionControllerParams = {}) {
+    this.auctionService = auctionService || new AuctionService()
+    this.bidService = bidService || new BidService()
   }
 
-  index = async (
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    req: Request
-  ): Promise<{
+  index = async (): Promise<{
     status: number
-    data: number
+    data: AuctionTransformed[]
   }> => {
-    return { status: 200, data: 2 }
+    // -------- Get all auctions
+    const auctions = await this.auctionService.getAllAuctions()
+
+    return { status: 200, data: auctions }
   }
 
   show = async (
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     req: Request
   ): Promise<{
     status: number
-    data: number
+    data: AuctionTransformed
   }> => {
-    return { status: 200, data: 2 }
+    // -------- Validate the request
+    const { id } = await auctionShowValidator(req)
+
+    // -------- Get the auction
+    const auction = await this.auctionService.getAuction(id)
+
+    return { status: 200, data: auction }
   }
 
   store = async (
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     req: Request
   ): Promise<{
     status: number
-    data: number
+    data: AuctionTransformed
   }> => {
-    return { status: 201, data: 2 }
+    // -------- Validate the request
+    const storeData = await auctionStoreValidator(req)
+
+    // -------- Get the requester userId
+    const myUserId = reqToUserId(req)
+
+    // -------- Create the auction
+    const auction = await this.auctionService.createAuction({
+      ...storeData,
+      userId: myUserId,
+    })
+
+    return { status: 201, data: auction }
   }
 
   update = async (
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     req: Request
   ): Promise<{
     status: number
-    data: number
+    data: AuctionTransformed
   }> => {
-    return { status: 200, data: 2 }
+    // -------- Validate the request
+    const { id } = await auctionShowValidator(req)
+    const updateData = await auctionUpdateValidator(req)
+
+    // -------- Update the auction
+    const auction = await this.auctionService.updateAuction(id, updateData)
+
+    return { status: 200, data: auction }
   }
 
   destroy = async (
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     req: Request
   ): Promise<{
     status: number
-    data: number
   }> => {
-    return { status: 200, data: 2 }
+    // -------- Validate the request
+    const { id } = await auctionShowValidator(req)
+
+    // -------- Get the requester userId
+    const myUserId = reqToUserId(req)
+
+    // -------- Delete the auction
+    await this.auctionService.deleteAuction({ auctionId: id, userId: myUserId })
+
+    return { status: 200 }
   }
 
   placeBid = async (
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     req: Request
   ): Promise<{
     status: number
-    data: number
+    data: BidTransformed
   }> => {
-    return { status: 200, data: 2 }
+    // -------- Validate the request
+    const { id: auctionId } = await auctionShowValidator(req)
+    const { amount } = await bidStoreValidator(req)
+
+    // -------- Get the requester userId
+    const myUserId = reqToUserId(req)
+
+    // -------- Place a bid
+    const bid = await this.bidService.placeBid({
+      userId: myUserId,
+      auctionId,
+      amount,
+    })
+
+    return { status: 200, data: bid }
   }
 
-  indexBid = async (
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  indexBids = async (
     req: Request
   ): Promise<{
     status: number
-    data: number
+    data: BidTransformed[]
   }> => {
-    return { status: 200, data: 2 }
+    // -------- Validate the request
+    const { id: auctionId } = await auctionShowValidator(req)
+
+    // -------- Get all bids
+    const bids = await this.bidService.getAllBidsByAuctionId(auctionId)
+
+    return { status: 200, data: bids }
   }
 }

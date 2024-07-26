@@ -13,4 +13,23 @@ export default class AuctionRepository {
   ): Promise<Auction> => {
     return this.prisma.auction.create({ data })
   }
+
+  show = async (id: number): Promise<Auction | null> => {
+    return this.prisma.auction.findUnique({ where: { id } })
+  }
+
+  all = async (): Promise<Auction[]> => {
+    return this.prisma.auction.findMany()
+  }
+
+  update = async (
+    id: number,
+    data: Prisma.AuctionUncheckedUpdateInput
+  ): Promise<Auction> => {
+    return this.prisma.auction.update({ where: { id }, data })
+  }
+
+  delete = async (id: number): Promise<Auction> => {
+    return this.prisma.auction.delete({ where: { id } })
+  }
 }

@@ -12,6 +12,6 @@ auctionRoutes.get('/:id', routeHandler(auctionController.show))
 auctionRoutes.delete('/:id', routeHandler(auctionController.destroy))
 
 auctionRoutes.post('/:id/bid', routeHandler(auctionController.placeBid))
-auctionRoutes.get('/:id/bids', routeHandler(auctionController.indexBid))
+auctionRoutes.get('/:id/bids', routeHandler(auctionController.indexBids))
 
 export default auctionRoutes
