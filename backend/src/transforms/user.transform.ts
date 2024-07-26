@@ -6,13 +6,17 @@ export type UserWithRelations = User & {
   auctions?: Auction[]
   bids?: Bid[]
 }
-export type UserTransformed = Omit<User, 'auctions' | 'bids' | 'password'> & {
+export type UserTransformed = Omit<
+  User,
+  'auctions' | 'bids' | 'password' | 'jwtSecret'
+> & {
   auctions?: AuctionTransformed[]
   bids?: BidTransformed[]
 }
 
 export function transformUser(data: UserWithRelations): UserTransformed {
-  const { auctions, bids, ...transformedUser } = data
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { auctions, bids, password, jwtSecret, ...transformedUser } = data
 
   return {
     ...transformedUser,

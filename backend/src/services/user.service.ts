@@ -7,20 +7,24 @@ type UserServiceParams = {
 }
 
 export default class UserService {
-  userRepository: UserRepository
+  private userRepository: UserRepository
 
   constructor({ userRepository }: UserServiceParams = {}) {
     this.userRepository = userRepository || new UserRepository()
   }
 
-  async createUser(data: { email: string; password: string; name: string }) {
+  createUser = async (data: {
+    email: string
+    password: string
+    name: string
+  }) => {
     // -------- Create the user
     const newUser = await this.userRepository.create(data)
 
     return transformUser(newUser)
   }
 
-  async getUser(userId: number) {
+  getUser = async (userId: number) => {
     // -------- Get the user
     const user = await this.userRepository.show(userId)
     if (!user)

@@ -5,7 +5,7 @@ type BidServiceParams = {
 }
 
 export default class BidService {
-  bidRepository: BidRepository
+  private bidRepository: BidRepository
 
   constructor({ bidRepository }: BidServiceParams = {}) {
     this.bidRepository = bidRepository || new BidRepository()

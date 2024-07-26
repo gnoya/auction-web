@@ -4,7 +4,7 @@ CREATE TABLE `User` (
     `email` VARCHAR(191) NOT NULL,
     `name` VARCHAR(191) NOT NULL,
     `password` VARCHAR(191) NOT NULL,
-    `jwtSecret` VARCHAR(191) NULL,
+    `jwtSecret` LONGTEXT NULL,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
 

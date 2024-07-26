@@ -11,13 +11,13 @@ type AuthServiceParams = {
 }
 
 export default class AuthService {
-  userRepository: UserRepository
+  private userRepository: UserRepository
 
   constructor({ userRepository }: AuthServiceParams = {}) {
     this.userRepository = userRepository || new UserRepository()
   }
 
-  async login(data: { email: string; password: string }) {
+  login = async (data: { email: string; password: string }) => {
     // -------- Get the user
     const user = await this.userRepository.showByEmail(data.email)
     if (!user) throw new WrongCredentialsError()

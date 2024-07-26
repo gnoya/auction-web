@@ -20,13 +20,13 @@ export default class AuctionService {
     this.userRepository = userRepository || new UserRepository()
   }
 
-  async createAuction(data: {
+  createAuction = async (data: {
     userId: number
     title: string
     description: string
     startingPrice: number
     endTime: Date
-  }) {
+  }) => {
     // -------- Check if the user exists
     const user = await this.userRepository.show(data.userId)
     if (!user)

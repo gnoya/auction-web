@@ -18,7 +18,7 @@ model User {
   email     String    @unique
   name      String
   password  String
-  jwtSecret String?
+  jwtSecret String?   @db.LongText
   auctions  Auction[]
   bids      Bid[]
 

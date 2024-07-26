@@ -12,21 +12,23 @@ type AuthControllerParams = {
 }
 
 export default class AuthController {
-  userService: UserService
-  authService: AuthService
+  private userService: UserService
+  private authService: AuthService
 
   constructor({ userService, authService }: AuthControllerParams = {}) {
     this.userService = userService || new UserService()
     this.authService = authService || new AuthService()
   }
 
-  async login(req: Request): Promise<{
+  login = async (
+    req: Request
+  ): Promise<{
     status: number
     data: {
       user: UserTransformed
       token: string
     }
-  }> {
+  }> => {
     // -------- Validate the request
     const validated = await loginValidator(req)
 
@@ -36,10 +38,12 @@ export default class AuthController {
     return { status: 200, data: loginData }
   }
 
-  async signUp(req: Request): Promise<{
+  signUp = async (
+    req: Request
+  ): Promise<{
     status: number
     data: UserTransformed
-  }> {
+  }> => {
     // -------- Validate the request
     const validated = await signUpValidator(req)
 
@@ -49,10 +53,12 @@ export default class AuthController {
     return { status: 201, data }
   }
 
-  async profile(req: Request): Promise<{
+  profile = async (
+    req: Request
+  ): Promise<{
     status: number
     data: UserTransformed
-  }> {
+  }> => {
     // -------- Get the requester userId
     const myUserId = reqToUserId(req)
 
