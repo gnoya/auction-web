@@ -27,13 +27,15 @@ model User {
 }
 
 model Auction {
-  id           Int    @id @default(autoincrement())
-  userId       Int
-  title        String
-  description  String
-  initialPrice Float
-  user         User   @relation(fields: [userId], references: [id])
-  bids         Bid[]
+  id            Int      @id @default(autoincrement())
+  userId        Int
+  title         String
+  description   String
+  startingPrice Float
+  currentPrice  Float
+  endTime       DateTime
+  user          User     @relation(fields: [userId], references: [id])
+  bids          Bid[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -48,5 +50,4 @@ model Bid {
   user      User    @relation(fields: [userId], references: [id])
 
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 }

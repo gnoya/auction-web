@@ -24,13 +24,20 @@ export default class AuctionService {
     userId: number
     title: string
     description: string
-    initialPrice: number
+    startingPrice: number
+    endTime: Date
   }) {
+    // -------- Check if the user exists
     const user = await this.userRepository.show(data.userId)
     if (!user)
       throw new ResourceNotFoundError(`User with id ${data.userId} not found`)
 
-    const newAuction = await this.auctionRepository.create(data)
+    // -------- Create the auction
+    const newAuction = await this.auctionRepository.create({
+      ...data,
+      currentPrice: data.startingPrice,
+    })
+
     return transformAuction(newAuction)
   }
 }

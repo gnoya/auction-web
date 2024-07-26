@@ -27,7 +27,10 @@ export default class AuthController {
       token: string
     }
   }> {
+    // -------- Validate the request
     const validated = await loginValidator(req)
+
+    // -------- Login the user
     const loginData = await this.authService.login(validated)
 
     return { status: 200, data: loginData }
@@ -37,7 +40,10 @@ export default class AuthController {
     status: number
     data: UserTransformed
   }> {
+    // -------- Validate the request
     const validated = await signUpValidator(req)
+
+    // -------- Create the user
     const data = await this.userService.createUser(validated)
 
     return { status: 201, data }
@@ -47,7 +53,10 @@ export default class AuthController {
     status: number
     data: UserTransformed
   }> {
+    // -------- Get the requester userId
     const myUserId = reqToUserId(req)
+
+    // -------- Get the user data
     const data = await this.userService.getUser(myUserId)
 
     return { status: 200, data }

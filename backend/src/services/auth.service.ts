@@ -26,14 +26,18 @@ export default class AuthService {
     const auth = await bcrypt.compare(data.password, user.password)
     if (!auth) throw new WrongCredentialsError()
 
-    // -------- Create the JWT
+    // -------- Create the JWT Payload
     const JWTpayload: JWTPayload = {
       userId: user.id,
       iat: Date.now(),
     }
 
-    const secret = crypto.randomBytes(255).toString('base64')
-    const token = signJWT(JWTpayload, secret, '365d')
+    // -------- Create the JWT secret and token
+    const jwtSecret = crypto.randomBytes(255).toString('base64')
+    const token = signJWT(JWTpayload, jwtSecret, '365d')
+
+    // -------- Update the user jwtSecret
+    await this.userRepository.update(user.id, { jwtSecret })
 
     return {
       user: transformUser(user),

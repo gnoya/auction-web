@@ -14,12 +14,14 @@ export default class UserService {
   }
 
   async createUser(data: { email: string; password: string; name: string }) {
+    // -------- Create the user
     const newUser = await this.userRepository.create(data)
 
     return transformUser(newUser)
   }
 
   async getUser(userId: number) {
+    // -------- Get the user
     const user = await this.userRepository.show(userId)
     if (!user)
       throw new ResourceNotFoundError(`User with id ${userId} not found`)
