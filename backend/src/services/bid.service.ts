@@ -1,20 +1,29 @@
 import { BadRequestError, ResourceNotFoundError } from '@/errors/common'
 import AuctionRepository from '@/repositories/auction.repository'
 import BidRepository from '@/repositories/bid.repository'
+import TransactionRepository from '@/repositories/transaction.repository'
 import { transformBid, transformBidArray } from '@/transforms/bid.transform'
 
 type BidServiceParams = {
   bidRepository?: BidRepository
   auctionRepository?: AuctionRepository
+  transactionRepository?: TransactionRepository
 }
 
 export default class BidService {
   private bidRepository: BidRepository
   private auctionRepository: AuctionRepository
+  private transactionRepository: TransactionRepository
 
-  constructor({ bidRepository, auctionRepository }: BidServiceParams = {}) {
+  constructor({
+    bidRepository,
+    auctionRepository,
+    transactionRepository,
+  }: BidServiceParams = {}) {
     this.bidRepository = bidRepository || new BidRepository()
     this.auctionRepository = auctionRepository || new AuctionRepository()
+    this.transactionRepository =
+      transactionRepository || new TransactionRepository()
   }
 
   getAllBidsByAuctionId = async (auctionId: number) => {
@@ -38,12 +47,17 @@ export default class BidService {
         'Bid amount must be greater or equal than the current price'
       )
 
-    // -------- Place a bid
-    const newBid = await this.bidRepository.create(data)
+    // -------- Create a new bid and update the currentPrice with a transaction
+    const newBid = await this.transactionRepository.transaction(async (tx) => {
+      await this.auctionRepository.update(
+        auction.id,
+        {
+          currentPrice: data.amount,
+        },
+        tx
+      )
 
-    // -------- Update the auction currentPrice
-    await this.auctionRepository.update(auction.id, {
-      currentPrice: data.amount,
+      return await this.bidRepository.create(data, tx)
     })
 
     return transformBid(newBid)

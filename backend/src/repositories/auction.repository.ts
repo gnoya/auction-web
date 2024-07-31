@@ -1,8 +1,9 @@
 import { Auction, Prisma, PrismaClient } from '@prisma/client'
 import ApplicationPrisma from '@/database/application.prisma'
+import { PrismaTransaction } from '@/types/prisma-transaction.type'
 
 export default class AuctionRepository {
-  private prisma: PrismaClient
+  public prisma: PrismaClient
 
   constructor(prisma?: PrismaClient) {
     this.prisma = prisma || ApplicationPrisma.client
@@ -24,9 +25,10 @@ export default class AuctionRepository {
 
   update = async (
     id: number,
-    data: Prisma.AuctionUncheckedUpdateInput
+    data: Prisma.AuctionUncheckedUpdateInput,
+    tx?: PrismaTransaction
   ): Promise<Auction> => {
-    return this.prisma.auction.update({ where: { id }, data })
+    return (tx || this.prisma).auction.update({ where: { id }, data })
   }
 
   delete = async (id: number): Promise<Auction> => {

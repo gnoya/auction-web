@@ -1,5 +1,6 @@
 import { Prisma, PrismaClient } from '@prisma/client'
 import ApplicationPrisma from '@/database/application.prisma'
+import { PrismaTransaction } from '@/types/prisma-transaction.type'
 
 export default class BidRepository {
   private prisma: PrismaClient
@@ -15,7 +16,10 @@ export default class BidRepository {
     })
   }
 
-  create = async (data: Prisma.BidUncheckedCreateInput) => {
-    return this.prisma.bid.create({ data })
+  create = async (
+    data: Prisma.BidUncheckedCreateInput,
+    tx?: PrismaTransaction
+  ) => {
+    return (tx || this.prisma).bid.create({ data })
   }
 }
