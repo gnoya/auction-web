@@ -5,8 +5,21 @@ import { appLoggerFactory } from '@/utils/logger'
 import { NODE_ENV, SERVICE_NAME, SERVICE_PORT } from '@/config/env'
 import authRoutes from '@/routes/auth.routes'
 import auctionRoutes from '@/routes/auction.routes'
+import Broadcaster from '@/broadcaster/broadcaster'
+import { Server } from 'socket.io'
+import { createServer } from 'http'
+import SocketManager from '@/broadcaster/socket-manager'
 
 const app = express()
+
+//------------- socket io
+const server = createServer(app)
+const io = new Server(server, {
+  cors: {
+    origin: '*',
+  },
+})
+new SocketManager(io, new Broadcaster()).setup()
 
 //------------- parsing body
 app.use(json())
@@ -31,7 +44,7 @@ function start() {
     NODE_ENV === 'production'
   )
 
-  app.listen(SERVICE_PORT, () => {
+  server.listen(SERVICE_PORT, () => {
     logger.info(
       `Env is ${NODE_ENV}.`,
       `Service started in port ${SERVICE_PORT}`

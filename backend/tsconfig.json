@@ -34,7 +34,8 @@
       "@/database/*": ["src/database/*"],
       "@/schemas/*": ["src/schemas/*"],
       "@/routes/*": ["src/routes/*"],
-      "@/types/*": ["src/types/*"]
+      "@/types/*": ["src/types/*"],
+      "@/broadcaster/*": ["src/broadcaster/*"]
     }
   },
   "include": [

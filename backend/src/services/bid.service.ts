@@ -3,27 +3,32 @@ import AuctionRepository from '@/repositories/auction.repository'
 import BidRepository from '@/repositories/bid.repository'
 import TransactionRepository from '@/repositories/transaction.repository'
 import { transformBid, transformBidArray } from '@/transforms/bid.transform'
+import Broadcaster from '@/broadcaster/broadcaster'
 
 type BidServiceParams = {
   bidRepository?: BidRepository
   auctionRepository?: AuctionRepository
   transactionRepository?: TransactionRepository
+  broadcaster?: Broadcaster
 }
 
 export default class BidService {
   private bidRepository: BidRepository
   private auctionRepository: AuctionRepository
   private transactionRepository: TransactionRepository
+  private broadcaster: Broadcaster
 
   constructor({
     bidRepository,
     auctionRepository,
     transactionRepository,
+    broadcaster,
   }: BidServiceParams = {}) {
     this.bidRepository = bidRepository || new BidRepository()
     this.auctionRepository = auctionRepository || new AuctionRepository()
     this.transactionRepository =
       transactionRepository || new TransactionRepository()
+    this.broadcaster = broadcaster || new Broadcaster()
   }
 
   getAllBidsByAuctionId = async (auctionId: number) => {
@@ -58,6 +63,14 @@ export default class BidService {
       )
 
       return await this.bidRepository.create(data, tx)
+    })
+
+    // -------- Broadcast the new bid
+    this.broadcaster.broadcast({
+      event: `auctions/${data.auctionId}/new-bid`,
+      data: {
+        newPrice: data.amount,
+      },
     })
 
     return transformBid(newBid)

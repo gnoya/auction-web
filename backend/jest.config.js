@@ -24,20 +24,6 @@ module.exports = {
     'src/validators',
   ],
   moduleNameMapper: {
-    // "@/config/*": ["src/config/*"],
-    //   "@/controllers/*": ["src/controllers/*"],
-    //   "@/services/*": ["src/services/*"],
-    //   "@/middlewares/*": ["src/middlewares/*"],
-    //   "@/repositories/*": ["src/repositories/*"],
-    //   "@/transforms/*": ["src/transforms/*"],
-    //   "@/validators/*": ["src/validators/*"],
-    //   "@/helpers/*": ["src/helpers/*"],
-    //   "@/utils/*": ["src/utils/*"],
-    //   "@/errors/*": ["src/errors/*"],
-    //   "@/database/*": ["src/database/*"],
-    //   "@/schemas/*": ["src/schemas/*"],
-    //   "@/routes/*": ["src/routes/*"]
-
     '@/config/(.*)': '<rootDir>/config/$1',
     '@/controllers/(.*)': '<rootDir>/src/controllers/$1',
     '@/services/(.*)': '<rootDir>/src/services/$1',
@@ -51,5 +37,6 @@ module.exports = {
     '@/schemas/(.*)': '<rootDir>/src/schemas/$1',
     '@/routes/(.*)': '<rootDir>/src/routes/$1',
     '@/types/(.*)': '<rootDir>/src/types/$1',
+    '@/broadcaster/(.*)': '<rootDir>/src/broadcaster/$1',
   },
 }
