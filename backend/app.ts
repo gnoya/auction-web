@@ -10,16 +10,9 @@ import { Server } from 'socket.io'
 import { createServer } from 'http'
 import SocketManager from '@/broadcaster/socket-manager'
 
+//----------------- express
 const app = express()
-
-//------------- socket io
 const server = createServer(app)
-const io = new Server(server, {
-  cors: {
-    origin: '*',
-  },
-})
-new SocketManager(io, new Broadcaster()).setup()
 
 //------------- parsing body
 app.use(json())
@@ -36,6 +29,14 @@ app.get('/health-check', (req: Request, res: Response) => res.json('ok'))
 //------------- routes
 app.use('/api/auth', authRoutes)
 app.use('/api/auctions', auctionRoutes)
+
+//------------- socket io
+const io = new Server(server, {
+  cors: {
+    origin: '*',
+  },
+})
+new SocketManager(io, new Broadcaster()).setup()
 
 //------------- starting the app
 function start() {
