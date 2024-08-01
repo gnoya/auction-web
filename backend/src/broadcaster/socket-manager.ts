@@ -19,7 +19,7 @@ export default class SocketManager {
     this.io.on('connection', (socket) => {
       logger.info(`Socket ${socket.id} has connected to server`)
 
-      socket.join('notifications')
+      socket.join(this.broadcaster.defaultChannel)
 
       socket.on('disconnect', () => {
         logger.info(`Socket ${socket.id} has disconnected from server`)

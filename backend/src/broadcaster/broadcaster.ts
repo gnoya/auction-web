@@ -5,19 +5,20 @@ const logger = new AppLogger()
 
 export default class Broadcaster {
   private static io?: SocketIOServer
+  public defaultChannel: string = 'notifications'
 
   setIO(io: SocketIOServer) {
     Broadcaster.io = io
   }
 
   broadcast({
-    channel = 'notifications',
+    channel = this.defaultChannel,
     event,
     data,
   }: {
     channel?: string
     event: string
-    data: any // eslint-disable-line
+    data: unknown
   }) {
     if (!Broadcaster.io) throw new Error('SocketIO server is not set')
 
