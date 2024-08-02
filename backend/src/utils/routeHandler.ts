@@ -1,8 +1,6 @@
 import { Request, Response } from 'express'
-import AppLogger from './logger'
 import { NODE_ENV } from '@/config/env'
-
-const logger = new AppLogger()
+import logger from './logger'
 
 export const routeHandler =
   <T extends { status: number; data?: unknown }>(

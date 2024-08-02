@@ -1,73 +1,63 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { ISettingsParam, Logger } from 'tslog'
+import { NODE_ENV } from '@/config/env'
+import winston, { format } from 'winston'
 
-const refreshSettings = (target: any, memberName: string) => {
-  let original: any = target[memberName]
-
-  Object.defineProperty(target, memberName, {
-    set: (newValue: any) => {
-      original = newValue
-    },
-    get: function () {
-      if (AppLogger.settings) {
-        const that = this as AppLogger
-        that.setSettings(AppLogger.settings)
-      }
-
-      return original
-    },
-  })
+// ------------- Define log levels and colors
+const levels = {
+  error: 0,
+  warn: 1,
+  http: 2,
+  info: 3,
+  debug: 4,
 }
 
-export default class AppLogger extends Logger {
-  public static settings?: ISettingsParam = {
-    displayInstanceName: true,
-    displayFunctionName: false,
-    displayFilePath: 'hideNodeModulesOnly',
-  }
-  public static setup?: (logger: AppLogger) => void
+winston.addColors({
+  ERROR: 'red',
+  WARN: 'yellow',
+  INFO: 'green',
+  HTTP: 'magenta',
+  DEBUG: 'white',
+})
 
-  constructor(settings?: ISettingsParam, setup?: (logger: AppLogger) => void) {
-    super(settings || AppLogger.settings)
-    AppLogger.settings = settings || AppLogger.settings
-    AppLogger.setup = setup || AppLogger.setup
-    AppLogger.setup?.(this)
-  }
+// ------------- Create formatters for logger
+const timestampFormat = winston.format.timestamp({
+  format: 'YYYY-MM-DD HH:mm:ss',
+})
 
-  @refreshSettings
-  debug = super.debug
+const levelToUpperCaseFormat = format((info) => {
+  info.level = info.level.toUpperCase()
+  return info
+})()
 
-  @refreshSettings
-  info = super.info
+const alignColorsAndTimeFormat = winston.format.printf((data) =>
+  winston.format
+    .colorize()
+    .colorize(
+      data.level,
+      `[${data.timestamp}] ${data.level}: ${typeof data.message === 'object' ? JSON.stringify(data.message, null, 2) : data.message}`
+    )
+)
 
-  @refreshSettings
-  silly = super.silly
+// ------------- Create transports for logger
+const transports = [
+  new winston.transports.Console({
+    format: alignColorsAndTimeFormat,
+  }),
+  new winston.transports.File({
+    filename: 'logs/error.log',
+    level: 'http',
+    format: winston.format.printf(
+      (data) =>
+        `[${data.timestamp}] ${data.level}: ${typeof data.message === 'object' ? JSON.stringify(data.message, null, 2) : data.message}`
+    ),
+  }),
+]
 
-  @refreshSettings
-  trace = super.trace
+// Create the logger instance
+const logger = winston.createLogger({
+  level: (() => (NODE_ENV === 'development' ? 'debug' : 'http'))(),
+  levels,
+  transports,
+  format: winston.format.combine(timestampFormat, levelToUpperCaseFormat),
+})
 
-  @refreshSettings
-  warn = super.warn
-
-  @refreshSettings
-  error = super.error
-
-  @refreshSettings
-  fatal = super.fatal
-}
-
-export function appLoggerFactory(
-  instanceName: string,
-  productionMode: boolean
-) {
-  return new AppLogger({
-    ...AppLogger.settings,
-    instanceName,
-    minLevel: productionMode ? LogLevels.ERRORS : LogLevels.ALL,
-  })
-}
-
-export enum LogLevels {
-  ERRORS = 'error',
-  ALL = 'silly',
-}
+export default logger

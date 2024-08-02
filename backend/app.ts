@@ -1,14 +1,14 @@
 import express, { Request, Response, json } from 'express'
 import cors from 'cors'
-import loggingMiddleware from '@/middlewares/logging.middleware'
-import { appLoggerFactory } from '@/utils/logger'
-import { NODE_ENV, SERVICE_NAME, SERVICE_PORT } from '@/config/env'
+import { NODE_ENV, SERVICE_PORT } from '@/config/env'
 import authRoutes from '@/routes/auth.routes'
 import auctionRoutes from '@/routes/auction.routes'
 import Broadcaster from '@/broadcaster/broadcaster'
 import { Server } from 'socket.io'
 import { createServer } from 'http'
 import SocketManager from '@/broadcaster/socket-manager'
+import logger from '@/utils/logger'
+import morganMiddleware from '@/middlewares/morgan.middleware'
 
 //----------------- express
 const app = express()
@@ -21,7 +21,7 @@ app.use(json())
 app.use(cors())
 
 //------------- logging middleware
-app.use(loggingMiddleware)
+app.use(morganMiddleware)
 
 //------------- healthcheck
 app.get('/health-check', (req: Request, res: Response) => res.json('ok'))
@@ -40,11 +40,6 @@ new SocketManager(io, new Broadcaster()).setup()
 
 //------------- starting the app
 function start() {
-  const logger = appLoggerFactory(
-    `${SERVICE_NAME}:${SERVICE_PORT} - ${process.pid}`,
-    NODE_ENV === 'production'
-  )
-
   server.listen(SERVICE_PORT, () => {
     logger.info(
       `Env is ${NODE_ENV}.`,

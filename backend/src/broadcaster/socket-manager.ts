@@ -1,8 +1,6 @@
 import { Server as SocketIOServer } from 'socket.io'
 import Broadcaster from './broadcaster'
-import AppLogger from '@/utils/logger'
-
-const logger = new AppLogger()
+import logger from '@/utils/logger'
 
 export default class SocketManager {
   protected broadcaster: Broadcaster
@@ -15,7 +13,7 @@ export default class SocketManager {
     this.broadcaster.setIO(io)
   }
 
-  setup() {
+  setup = () => {
     this.io.on('connection', (socket) => {
       logger.info(`Socket ${socket.id} has connected to server`)
 
