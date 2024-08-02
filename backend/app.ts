@@ -6,9 +6,11 @@ import auctionRoutes from '@/routes/auction.routes'
 import Broadcaster from '@/broadcaster/broadcaster'
 import { Server } from 'socket.io'
 import { createServer } from 'http'
-import SocketManager from '@/broadcaster/socket-manager'
 import logger from '@/utils/logger'
-import morganMiddleware from '@/middlewares/morgan.middleware'
+import {
+  morganBeforeMiddleware,
+  morganAfterMiddleware,
+} from '@/middlewares/morgan.middleware'
 
 //----------------- express
 const app = express()
@@ -16,12 +18,14 @@ const server = createServer(app)
 
 //------------- parsing body
 app.use(json())
+app.enable('trust proxy')
 
 //------------- cors
 app.use(cors())
 
 //------------- logging middleware
-app.use(morganMiddleware)
+app.use(morganBeforeMiddleware)
+app.use(morganAfterMiddleware)
 
 //------------- healthcheck
 app.get('/health-check', (req: Request, res: Response) => res.json('ok'))
@@ -36,7 +40,8 @@ const io = new Server(server, {
     origin: '*',
   },
 })
-new SocketManager(io, new Broadcaster()).setup()
+
+new Broadcaster().setIO(io)
 
 //------------- starting the app
 function start() {

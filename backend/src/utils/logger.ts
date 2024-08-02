@@ -19,14 +19,14 @@ winston.addColors({
 })
 
 // ------------- Create formatters for logger
-const timestampFormat = winston.format.timestamp({
-  format: 'YYYY-MM-DD HH:mm:ss',
-})
-
 const levelToUpperCaseFormat = format((info) => {
   info.level = info.level.toUpperCase()
   return info
 })()
+
+const timestampFormat = winston.format.timestamp({
+  format: 'YYYY-MM-DD HH:mm:ss',
+})
 
 const alignColorsAndTimeFormat = winston.format.printf((data) =>
   winston.format
