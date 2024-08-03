@@ -1,5 +1,5 @@
 {
-  "name": "auction-web",
+  "name": "auction-web-backend",
   "version": "1.0.0",
   "description": "Auction web backend using Prisma and Typescript",
   "main": "app.ts",
