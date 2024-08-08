@@ -1,6 +1,7 @@
 import Error, { InvalidJWTError } from '@/errors/common'
 import UserService from '@/services/user.service'
 import { extractJWT, jwtToUserId, verifyJWT } from '@/utils/jwt'
+import logger from '@/utils/logger'
 import { User } from '@prisma/client'
 import { NextFunction, Request, Response } from 'express'
 
@@ -26,6 +27,7 @@ export default async function JWTMiddleware(
     throw new InvalidJWTError(token)
   } catch (error: unknown) {
     const typedError = error as Error
+    logger.error(typedError)
     res.status(typedError.status).json({ error: typedError })
   }
 }

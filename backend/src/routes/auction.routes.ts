@@ -5,13 +5,19 @@ import AuctionController from '@/controllers/auction.controller'
 const auctionController = new AuctionController()
 const auctionRoutes = Router()
 
-auctionRoutes.get('/', routeHandler(auctionController.index))
-auctionRoutes.post('/', routeHandler(auctionController.store))
-auctionRoutes.put('/:id', routeHandler(auctionController.update))
-auctionRoutes.get('/:id', routeHandler(auctionController.show))
-auctionRoutes.delete('/:id', routeHandler(auctionController.destroy))
+auctionRoutes.get('/auctions', routeHandler(auctionController.index))
+auctionRoutes.post('/auctions', routeHandler(auctionController.store))
+auctionRoutes.put('/auctions/:id', routeHandler(auctionController.update))
+auctionRoutes.get('/auctions/:id', routeHandler(auctionController.show))
+auctionRoutes.delete('/auctions/:id', routeHandler(auctionController.destroy))
 
-auctionRoutes.post('/:id/bid', routeHandler(auctionController.placeBid))
-auctionRoutes.get('/:id/bids', routeHandler(auctionController.indexBids))
+auctionRoutes.post(
+  '/auctions/:id/bid',
+  routeHandler(auctionController.placeBid)
+)
+auctionRoutes.get(
+  '/auctions/:id/bids',
+  routeHandler(auctionController.indexBids)
+)
 
 export default auctionRoutes

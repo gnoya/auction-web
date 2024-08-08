@@ -18,6 +18,9 @@ winston.addColors({
   DEBUG: 'white',
 })
 
+const printingLine = (data: winston.Logform.TransformableInfo) =>
+  `[${data.timestamp}] ${data.level}: ${typeof data.message === 'object' ? JSON.stringify(data.message, null, 2) : data.message}`
+
 // ------------- Create formatters for logger
 const levelToUpperCaseFormat = format((info) => {
   info.level = info.level.toUpperCase()
@@ -29,12 +32,7 @@ const timestampFormat = winston.format.timestamp({
 })
 
 const alignColorsAndTimeFormat = winston.format.printf((data) =>
-  winston.format
-    .colorize()
-    .colorize(
-      data.level,
-      `[${data.timestamp}] ${data.level}: ${typeof data.message === 'object' ? JSON.stringify(data.message, null, 2) : data.message}`
-    )
+  winston.format.colorize().colorize(data.level, printingLine(data))
 )
 
 // ------------- Create transports for logger
@@ -45,19 +43,30 @@ const transports = [
   new winston.transports.File({
     filename: 'logs/error.log',
     level: 'http',
-    format: winston.format.printf(
-      (data) =>
-        `[${data.timestamp}] ${data.level}: ${typeof data.message === 'object' ? JSON.stringify(data.message, null, 2) : data.message}`
-    ),
+    format: winston.format.printf((data) => printingLine(data)),
   }),
 ]
 
+const envToLevel = (env: string) => {
+  switch (env) {
+    case 'development':
+      return 'debug'
+    case 'production':
+      return 'http'
+    case 'test':
+      return 'error'
+    default:
+      return 'http'
+  }
+}
+
 // Create the logger instance
 const logger = winston.createLogger({
-  level: (() => (NODE_ENV === 'development' ? 'debug' : 'http'))(),
+  level: envToLevel(NODE_ENV),
   levels,
   transports,
   format: winston.format.combine(timestampFormat, levelToUpperCaseFormat),
+  silent: NODE_ENV === 'test',
 })
 
 export default logger

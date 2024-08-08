@@ -28,11 +28,11 @@ app.use(morganBeforeMiddleware)
 app.use(morganAfterMiddleware)
 
 //------------- healthcheck
-app.get('/health-check', (req: Request, res: Response) => res.json('ok'))
+app.get('/api/health-check', (req: Request, res: Response) => res.json('ok'))
 
 //------------- routes
-app.use('/api/auth', authRoutes)
-app.use('/api/auctions', auctionRoutes)
+app.use('/api', authRoutes)
+app.use('/api', auctionRoutes)
 
 //------------- socket io
 const io = new Server(server, {

@@ -1,7 +1,6 @@
 import { reqToUserId } from '@/utils/jwt'
 import logger from '@/utils/logger'
-import { Request } from 'express'
-import { ServerResponse } from 'http'
+import { Request, Response } from 'express'
 import morgan, { StreamOptions, TokenIndexer } from 'morgan'
 
 const stream = (trim: boolean = false): StreamOptions => {
@@ -10,19 +9,15 @@ const stream = (trim: boolean = false): StreamOptions => {
   }
 }
 
-// Build the body message to be logged.
-morgan.token('body', (req) => {
-  return JSON.stringify((req as Request).body)
-})
-
 const customBeforeMorganFormat = (
-  tokens: TokenIndexer<Request, ServerResponse>,
+  tokens: TokenIndexer<Request, Response>,
   req: Request,
-  res: ServerResponse
+  res: Response
 ) => {
+  const requestId = Math.floor(10000 + Math.random() * 90000)
   const method = tokens.method(req, res)
   const url = tokens.url(req, res)
-  const body = tokens.body(req, res)
+  const body = { ...(req as Request).body }
   const ipAddress = req.ip && req.ip !== '::1' ? req.ip : '-'
 
   let userId: number | string
@@ -32,20 +27,25 @@ const customBeforeMorganFormat = (
     userId = '-'
   }
 
-  return `${method} ${url} | Body: ${body} | userId: ${userId} | IP: ${ipAddress}`
+  delete body.password
+  res.locals.userId = userId
+  res.locals.requestId = requestId
+
+  return `${method} ${url} | Request: ${requestId} | User: ${userId} | IP: ${ipAddress} | Body: ${JSON.stringify(body)}`
 }
 
 const customAfterMorganFormat = (
-  tokens: TokenIndexer<Request, ServerResponse>,
+  tokens: TokenIndexer<Request, Response>,
   req: Request,
-  res: ServerResponse
+  res: Response
 ) => {
   const method = tokens.method(req, res)
   const url = tokens.url(req, res)
   const status = tokens.status(req, res)
   const responseTime = Math.round(Number(tokens['response-time'](req, res)))
+  const reqId = res.locals.requestId
 
-  return `${method} ${url} | Status: ${status} - Time: ${responseTime} ms`
+  return `${method} ${url} | Request: ${reqId} | Status: ${status} | Time: ${responseTime} ms`
 }
 
 // ----------------- Morgan Middleware, occurs before the request

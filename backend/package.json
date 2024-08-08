@@ -28,7 +28,6 @@
     "socket.io": "^4.7.5",
     "socket.io-client": "^4.7.5",
     "ts-node": "^10.9.2",
-    "tslog": "^3.3.4",
     "tsx": "^4.7.2",
     "typescript": "^5.4.4",
     "winston": "^3.13.1",
