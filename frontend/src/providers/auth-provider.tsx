@@ -1,6 +1,6 @@
 import { ReactNode, useCallback, useState } from 'react'
 import { User } from '@/types/user'
-import { login } from '@/api/login'
+import { login } from '@/api/auth'
 import { flushSession, getSavedUser, saveToken, saveUser } from '@/api/session'
 import { authContext } from '@/contexts/auth-context'
 
