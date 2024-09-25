@@ -46,10 +46,7 @@ new Broadcaster().setIO(io)
 //------------- starting the app
 function start() {
   server.listen(SERVICE_PORT, () => {
-    logger.info(
-      `Env is ${NODE_ENV}.`,
-      `Service started in port ${SERVICE_PORT}`
-    )
+    logger.info(`Service started in port ${SERVICE_PORT} | Env is ${NODE_ENV}`)
   })
 }
 
