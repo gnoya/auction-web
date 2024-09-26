@@ -3,36 +3,52 @@ import { Auction } from '@/types/auction'
 import { Bid } from '@/types/bid'
 import { parseBids } from './bid'
 
-export async function getAuctions(): Promise<Auction[]> {
-  const response = await http.get('/auctions')
+export async function getAuctions(params?: {
+  signal?: AbortSignal
+}): Promise<Auction[]> {
+  const response = await http.get('/auctions', { signal: params?.signal })
 
   return parseAuctions(response.data.data)
 }
 
-export async function createAuction(data: unknown) {
-  return await http.post('/auctions', data)
+export async function createAuction(data: unknown, signal?: AbortSignal) {
+  return await http.post('/auctions', data, { signal })
 }
 
-export async function updateAuction(id: number, data: unknown) {
-  return await http.put(`/auctions/${id}`, data)
+export async function updateAuction(
+  id: number,
+  data: unknown,
+  signal?: AbortSignal,
+) {
+  return await http.put(`/auctions/${id}`, data, { signal })
 }
 
-export async function deleteAuction(id: number) {
-  return await http.delete(`/auctions/${id}`)
+export async function deleteAuction(id: number, signal?: AbortSignal) {
+  return await http.delete(`/auctions/${id}`, { signal })
 }
 
-export async function getAuction(id: number): Promise<Auction> {
-  const response = await http.get(`/auctions/${id}`)
+export async function getAuction(
+  id: number,
+  signal?: AbortSignal,
+): Promise<Auction> {
+  const response = await http.get(`/auctions/${id}`, { signal })
 
   return parseAuction(response.data.data)
 }
 
-export async function bidOnAuction(id: number, data: unknown) {
-  return await http.post(`/auctions/${id}/bid`, data)
+export async function bidOnAuction(
+  id: number,
+  data: unknown,
+  signal?: AbortSignal,
+) {
+  return await http.post(`/auctions/${id}/bid`, data, { signal })
 }
 
-export async function getAuctionBids(id: number): Promise<Bid[]> {
-  const response = await http.get(`/auctions/${id}/bids`)
+export async function getAuctionBids(
+  id: number,
+  signal?: AbortSignal,
+): Promise<Bid[]> {
+  const response = await http.get(`/auctions/${id}/bids`, { signal })
 
   return parseBids(response.data.data)
 }

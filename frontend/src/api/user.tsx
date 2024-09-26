@@ -1,8 +1,8 @@
 import { http } from '@/lib/http'
 import { User } from '@/types/user'
 
-export async function profile(): Promise<User> {
-  const response = await http.get('/auth/profile')
+export async function profile(signal?: AbortSignal): Promise<User> {
+  const response = await http.get('/auth/profile', { signal })
   const { user } = response.data.data
   return parseUser(user)
 }
