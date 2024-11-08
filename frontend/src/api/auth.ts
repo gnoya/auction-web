@@ -2,34 +2,31 @@ import { http } from '@/lib/http'
 import { parseUser } from './user'
 
 export async function login(
-  { username, password }: { username: string; password: string },
+  { email, password }: { email: string; password: string },
   signal?: AbortSignal,
 ) {
+  console.log({ email, password })
   const response = await http.post(
     '/auth/login',
     {
-      username,
+      email,
       password,
     },
     { signal },
   )
 
-  const { user, token } = response.data.data
+  const { user, token } = response.data
   return { user: parseUser(user), token }
 }
 
 export async function register(
-  {
-    username,
-    name,
-    password,
-  }: { username: string; name: string; password: string },
+  { email, name, password }: { email: string; name: string; password: string },
   signal?: AbortSignal,
 ) {
-  return await http.post(
+  await http.post(
     '/auth/sign-up',
     {
-      username,
+      email,
       name,
       password,
     },

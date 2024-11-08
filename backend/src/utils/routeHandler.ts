@@ -2,13 +2,13 @@ import { Request, Response } from 'express'
 import logger from './logger'
 
 export const routeHandler =
-  <T extends { status: number; data?: unknown }>(
+  <T extends { status: number; data?: any }>( // eslint-disable-line @typescript-eslint/no-explicit-any
     routerHandler: (req: Request, res: Response) => Promise<T>
   ) =>
   async (req: Request, res: Response) => {
     try {
       const { status, data, ...rest } = await routerHandler(req, res)
-      if (!res.headersSent) res.status(status).json({ data, ...rest })
+      if (!res.headersSent) res.status(status).json({ ...data, ...rest })
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       logger.error(error)
@@ -21,6 +21,6 @@ export const routeHandler =
           }
 
       if (!res.headersSent)
-        res.status(internalError.status).json({ error: internalError })
+        res.status(internalError.status).json({ ...internalError })
     }
   }

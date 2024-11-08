@@ -4,6 +4,7 @@ import { toast } from 'sonner'
 
 export function useErrorHandler() {
   const handleError = useCallback(async (error: unknown) => {
+    console.log('aaaaaaaaaaaaaaaa')
     console.error(error)
     if (!(error instanceof Error)) return
 
@@ -16,8 +17,8 @@ export function useErrorHandler() {
           'Could not connect to the server. Please, check your internet connection.'
       }
       if (error.response) {
-        title = error.response?.data.error.title ?? 'Unknown server error.'
-        message = error.response?.data.error.detail ?? 'Try again later.'
+        title = error.response?.data.title ?? 'Unknown server error.'
+        message = error.response?.data.detail ?? 'Try again later.'
       }
     } else {
       title = error.name

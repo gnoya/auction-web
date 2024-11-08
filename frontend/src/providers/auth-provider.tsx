@@ -12,8 +12,8 @@ export default function AuthProvider({ children }: AuthProviderProps) {
   const authenticated = user !== null
 
   const authenticate = useCallback(
-    async (username: string, password: string) => {
-      const { user, token } = await login(username, password)
+    async (params: { email: string; password: string }) => {
+      const { user, token } = await login(params)
       saveToken(token)
       saveUser(user)
       setUser(user)

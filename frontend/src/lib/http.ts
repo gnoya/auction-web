@@ -12,11 +12,13 @@ http.interceptors.request.use(function injectJWT(config) {
 })
 
 http.interceptors.response.use(undefined, function flushSessionOn401(error) {
-  if (error instanceof AxiosError && error.response?.status === 401) {
+  console.log(error)
+  if (error instanceof AxiosError && error.status === 401) {
     flushSession()
     window.location.reload()
   }
-  return error
+
+  return Promise.reject(error)
 })
 
 export { http }

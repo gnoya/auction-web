@@ -1,9 +1,11 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { useErrorHandler } from '@/hooks/use-error-handler'
 import { useNavigate } from 'react-router-dom'
+import { register } from '@/api/auth'
+import { toast } from 'sonner'
 
 const buildFormSchema = () =>
   z.object({
@@ -27,19 +29,22 @@ export function useRegisterForm() {
   })
   const handleError = useErrorHandler()
 
-  async function handleSubmit(values: FormValues) {
-    toggleLoading(true)
-    try {
-      console.log(values)
-      // await authenticate(values.email, values.password)
-      return
-      return navigate('/', { replace: true })
-    } catch (error) {
-      handleError(error)
-    } finally {
-      toggleLoading(false)
-    }
-  }
+  const handleSubmit = useCallback(
+    async (values: FormValues) => {
+      toggleLoading(true)
+
+      try {
+        await register(values)
+        toast.success('Account created successfully')
+        return navigate('/auth', { replace: true })
+      } catch (error) {
+        handleError(error)
+      } finally {
+        toggleLoading(false)
+      }
+    },
+    [navigate, handleError],
+  )
 
   return {
     form,

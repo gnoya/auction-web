@@ -1,4 +1,4 @@
-import { createBrowserRouter } from 'react-router-dom'
+import { createBrowserRouter, Navigate } from 'react-router-dom'
 import { AuthGuard } from '@/guards/auth-guard'
 import { AppLayout } from '@/layouts/app-layout'
 import { AuthLayout } from '@/layouts/auth-layout'
@@ -12,7 +12,11 @@ import { CreateAuction } from './pages/auction/create-auction'
 
 export const router = createBrowserRouter([
   {
-    path: '/',
+    path: '',
+    element: <Navigate to="/dashboard" replace />,
+  },
+  {
+    path: 'dashboard',
     element: (
       <AuthGuard>
         <AppLayout />

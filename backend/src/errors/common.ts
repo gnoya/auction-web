@@ -23,7 +23,7 @@ export class BadRequestError extends Error {
   constructor(reason?: string) {
     super({
       status: 400,
-      title: 'badRequest',
+      title: 'Bad Request',
       detail: 'The request body was invalid',
       meta: { reason },
     })
@@ -34,7 +34,7 @@ export class ResourceNotFoundError extends Error {
   constructor(reason?: string) {
     super({
       status: 404,
-      title: 'notFound',
+      title: 'Not Found',
       detail: reason || 'Requested resource not found',
     })
   }
@@ -42,7 +42,7 @@ export class ResourceNotFoundError extends Error {
 
 export class ConflictError extends Error {
   constructor(detail: string) {
-    super({ status: 409, title: 'conflict', detail })
+    super({ status: 409, title: 'Conflict', detail })
   }
 }
 
@@ -60,7 +60,7 @@ export class UnauthorizedError extends Error {
   constructor(detail?: string) {
     super({
       status: 401,
-      title: 'unauthorized',
+      title: 'Unauthorized',
       detail,
     })
   }
@@ -70,7 +70,7 @@ export class BadJWTError extends Error {
   constructor(token: string) {
     super({
       status: 400,
-      title: 'badJWT',
+      title: 'Bad JWT',
       detail: 'The request cannot be authorized due to bad JWT Authorization',
       meta: {
         givenToken: token,
@@ -83,7 +83,7 @@ export class InvalidJWTError extends Error {
   constructor(token: string) {
     super({
       status: 403,
-      title: 'invalidJWT',
+      title: 'Invalid JWT',
       detail:
         'The request cannot be authorized, the given JWT was invalid or has expirated',
       meta: {
@@ -97,7 +97,7 @@ export class MissingJWTError extends Error {
   constructor() {
     super({
       status: 400,
-      title: 'missingJWT',
+      title: 'Missing JWT',
       detail: 'Bad request, there was no authorization JWT specified',
     })
   }

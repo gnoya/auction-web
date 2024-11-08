@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { useErrorHandler } from '@/hooks/use-error-handler'
@@ -19,25 +19,28 @@ export function useLoginForm() {
   const [isLoading, toggleLoading] = useState(false)
   const form = useForm<FormValues>({
     defaultValues: {
-      email: '',
-      password: '',
+      email: 'test1@gmail.com',
+      password: 'develop',
     },
     resolver: zodResolver(buildFormSchema()),
   })
   const { authenticate } = useAuth()
   const handleError = useErrorHandler()
 
-  async function handleSubmit(values: FormValues) {
-    toggleLoading(true)
-    try {
-      await authenticate(values.email, values.password)
-      return navigate('/', { replace: true })
-    } catch (error) {
-      handleError(error)
-    } finally {
-      toggleLoading(false)
-    }
-  }
+  const handleSubmit = useCallback(
+    async (values: FormValues) => {
+      toggleLoading(true)
+      try {
+        await authenticate(values)
+        return navigate('/', { replace: true })
+      } catch (error) {
+        handleError(error)
+      } finally {
+        toggleLoading(false)
+      }
+    },
+    [authenticate, navigate, handleError],
+  )
 
   return {
     form,

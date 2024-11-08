@@ -5,7 +5,7 @@ export const authContext = createContext<{
   user: User | null
   updateUser: (user: User) => void
   authenticated: boolean
-  authenticate: (username: string, password: string) => Promise<User>
+  authenticate: (params: { email: string; password: string }) => Promise<User>
   invalidate: () => Promise<void>
 }>({
   user: null,
