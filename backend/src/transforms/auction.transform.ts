@@ -18,11 +18,11 @@ export function transformAuction(
 
   return {
     ...transformedAuction,
-    user: user ? transformUser(user) : undefined,
-    bids: bids ? transformBidArray(bids) : undefined,
+    user: user && transformUser(user),
+    bids: bids && transformBidArray(bids),
   }
 }
 
 export function transformAuctionArray(data: AuctionWithRelations[]) {
-  return data.map((Auction: AuctionWithRelations) => transformAuction(Auction))
+  return data.map(transformAuction)
 }

@@ -4,6 +4,7 @@ import BidRepository from '@/repositories/bid.repository'
 import TransactionRepository from '@/repositories/transaction.repository'
 import { transformBid, transformBidArray } from '@/transforms/bid.transform'
 import Broadcaster from '@/broadcaster/broadcaster'
+import { PaginationParams } from '@/types/pagination.type'
 
 type BidServiceParams = {
   bidRepository?: BidRepository
@@ -31,11 +32,18 @@ export default class BidService {
     this.broadcaster = broadcaster || new Broadcaster()
   }
 
-  getAllBidsByAuctionId = async (auctionId: number) => {
+  getBidsByAuctionId = async (
+    auctionId: number,
+    paginationParams: PaginationParams
+  ) => {
     // -------- Get all bids by auctionId
-    const bids = await this.bidRepository.allByAuctionId(auctionId)
+    const { data: bids, pagination } =
+      await this.bidRepository.allPaginatedByAuctionId(
+        auctionId,
+        paginationParams
+      )
 
-    return transformBidArray(bids)
+    return { data: transformBidArray(bids), pagination }
   }
 
   placeBid = async (data: {

@@ -1,6 +1,7 @@
 import { Auction, Prisma, PrismaClient } from '@prisma/client'
 import ApplicationPrisma from '@/database/application.prisma'
 import { PrismaTransaction } from '@/types/prisma-transaction.type'
+import { PaginationResponse } from '@/types/pagination.type'
 
 export default class AuctionRepository {
   public prisma: PrismaClient
@@ -21,6 +22,31 @@ export default class AuctionRepository {
 
   all = async (): Promise<Auction[]> => {
     return this.prisma.auction.findMany()
+  }
+
+  allPaginated = async (pagination: {
+    page: number
+    limit: number
+  }): Promise<{
+    data: Auction[]
+    pagination: PaginationResponse
+  }> => {
+    const { page, limit } = pagination
+    const total = await this.prisma.auction.count()
+    const lastPage = Math.ceil(total / limit) || 1
+
+    const data = await this.prisma.auction.findMany({
+      skip: (page - 1) * limit,
+      take: limit,
+    })
+
+    return {
+      data,
+      pagination: {
+        page,
+        lastPage,
+      },
+    }
   }
 
   update = async (

@@ -7,7 +7,6 @@ interface AuthGuardProps {
 }
 export function AuthGuard({ children }: AuthGuardProps) {
   const { authenticated } = useAuth()
-  console.log(authenticated)
 
   if (!authenticated) return <Navigate to="/auth" replace />
 

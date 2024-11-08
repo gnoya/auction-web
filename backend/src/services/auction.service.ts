@@ -5,6 +5,7 @@ import {
   transformAuction,
   transformAuctionArray,
 } from '@/transforms/auction.transform'
+import { PaginationParams } from '@/types/pagination.type'
 import { auctionBelongsToUserValidator } from '@/validators/auction/belongs-to-user.validator'
 
 type AuctionServiceParams = {
@@ -54,11 +55,12 @@ export default class AuctionService {
     return transformAuction(auction)
   }
 
-  getAllAuctions = async () => {
-    // -------- Get all auctions
-    const auctions = await this.auctionRepository.all()
+  getAuctions = async (paginationParams: PaginationParams) => {
+    // -------- Get all auctions paginated
+    const { data: auctions, pagination } =
+      await this.auctionRepository.allPaginated(paginationParams)
 
-    return transformAuctionArray(auctions)
+    return { data: transformAuctionArray(auctions), pagination }
   }
 
   updateAuction = async (

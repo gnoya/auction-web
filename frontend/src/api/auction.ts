@@ -2,13 +2,22 @@ import { http } from '@/lib/http'
 import { Auction } from '@/types/auction'
 import { Bid } from '@/types/bid'
 import { parseBids } from './bid'
+import { PaginationParams, PaginationResponse } from '@/types/pagination'
+import { parsePagination } from './pagination'
 
-export async function getAuctions(params?: {
-  signal?: AbortSignal
-}): Promise<Auction[]> {
-  const response = await http.get('/auctions', { signal: params?.signal })
+export async function getAuctions(
+  { pagination }: { pagination?: PaginationParams },
+  signal?: AbortSignal,
+): Promise<{ data: Auction[]; pagination: PaginationResponse }> {
+  const response = await http.get('/auctions', {
+    params: pagination,
+    signal,
+  })
 
-  return parseAuctions(response.data.data)
+  return {
+    data: parseAuctions(response.data.data),
+    pagination: parsePagination(response.data.pagination),
+  }
 }
 
 export async function createAuction(data: unknown, signal?: AbortSignal) {
@@ -46,11 +55,18 @@ export async function bidOnAuction(
 
 export async function getAuctionBids(
   id: number,
+  { pagination }: { pagination?: PaginationParams },
   signal?: AbortSignal,
-): Promise<Bid[]> {
-  const response = await http.get(`/auctions/${id}/bids`, { signal })
+): Promise<{ data: Bid[]; pagination: PaginationResponse }> {
+  const response = await http.get(`/auctions/${id}/bids`, {
+    params: pagination,
+    signal,
+  })
 
-  return parseBids(response.data.data)
+  return {
+    data: parseBids(response.data.data),
+    pagination: parsePagination(response.data.pagination),
+  }
 }
 
 export function parseAuctions(data: unknown[]): Auction[] {

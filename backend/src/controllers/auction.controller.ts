@@ -8,6 +8,8 @@ import { auctionStoreValidator } from '@/validators/auction/store.validator'
 import BidService from '@/services/bid.service'
 import { BidTransformed } from '@/transforms/bid.transform'
 import { bidStoreValidator } from '@/validators/bid/store.validator'
+import { paginationValidator } from '@/validators/pagination/pagination.validator'
+import { PaginationResponse } from '@/types/pagination.type'
 
 type AuctionControllerParams = {
   auctionService?: AuctionService
@@ -23,14 +25,21 @@ export default class AuctionController {
     this.bidService = bidService || new BidService()
   }
 
-  index = async (): Promise<{
+  index = async (
+    req: Request
+  ): Promise<{
     status: number
     data: AuctionTransformed[]
+    pagination: PaginationResponse
   }> => {
-    // -------- Get all auctions
-    const auctions = await this.auctionService.getAllAuctions()
+    // -------- Validate the request
+    const paginationParams = await paginationValidator(req)
 
-    return { status: 200, data: auctions }
+    // -------- Get all auctions
+    const { data: auctions, pagination } =
+      await this.auctionService.getAuctions(paginationParams)
+
+    return { status: 200, data: auctions, pagination }
   }
 
   show = async (
@@ -136,13 +145,20 @@ export default class AuctionController {
   ): Promise<{
     status: number
     data: BidTransformed[]
+    pagination: PaginationResponse
   }> => {
     // -------- Validate the request
     const { id: auctionId } = await auctionShowValidator(req)
 
-    // -------- Get all bids
-    const bids = await this.bidService.getAllBidsByAuctionId(auctionId)
+    // -------- Validate the request
+    const paginationParams = await paginationValidator(req)
 
-    return { status: 200, data: bids }
+    // -------- Get all bids
+    const { data: bids, pagination } = await this.bidService.getBidsByAuctionId(
+      auctionId,
+      paginationParams
+    )
+
+    return { status: 200, data: bids, pagination }
   }
 }

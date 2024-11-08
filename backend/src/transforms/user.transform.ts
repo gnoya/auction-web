@@ -20,11 +20,11 @@ export function transformUser(data: UserWithRelations): UserTransformed {
 
   return {
     ...transformedUser,
-    auctions: auctions ? transformAuctionArray(auctions) : undefined,
-    bids: bids ? transformBidArray(bids) : undefined,
+    auctions: auctions && transformAuctionArray(auctions),
+    bids: bids && transformBidArray(bids),
   }
 }
 
 export function transformUserArray(data: UserWithRelations[]) {
-  return data.map((user: UserWithRelations) => transformUser(user))
+  return data.map(transformUser)
 }

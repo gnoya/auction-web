@@ -2,8 +2,7 @@ import { http } from '@/lib/http'
 import { parseUser } from './user'
 
 export async function login(
-  username: string,
-  password: string,
+  { username, password }: { username: string; password: string },
   signal?: AbortSignal,
 ) {
   const response = await http.post(
@@ -20,9 +19,11 @@ export async function login(
 }
 
 export async function register(
-  username: string,
-  name: string,
-  password: string,
+  {
+    username,
+    name,
+    password,
+  }: { username: string; name: string; password: string },
   signal?: AbortSignal,
 ) {
   return await http.post(
