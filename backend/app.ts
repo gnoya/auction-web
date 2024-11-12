@@ -11,6 +11,7 @@ import {
   morganBeforeMiddleware,
   morganAfterMiddleware,
 } from '@/middlewares/morgan.middleware'
+import userRoutes from '@/routes/user.routes'
 
 //----------------- express
 const app = express()
@@ -33,6 +34,7 @@ app.get('/api/health-check', (req: Request, res: Response) => res.json('ok'))
 //------------- routes
 app.use('/api', authRoutes)
 app.use('/api', auctionRoutes)
+app.use('/api', userRoutes)
 
 //------------- socket io
 const io = new Server(server, {

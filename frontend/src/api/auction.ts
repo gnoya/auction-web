@@ -4,6 +4,7 @@ import { Bid } from '@/types/bid'
 import { parseBids } from './bid'
 import { PaginationParams, PaginationResponse } from '@/types/pagination'
 import { parsePagination } from './pagination'
+import { parseUser } from './user'
 
 export async function getAuctions(
   { pagination }: { pagination?: PaginationParams },
@@ -116,7 +117,7 @@ export function parseAuction(data: any): Auction {
     startingPrice,
     currentPrice,
     endTime,
-    user,
+    user: user && parseUser(user),
     bids,
     createdAt,
     updatedAt,

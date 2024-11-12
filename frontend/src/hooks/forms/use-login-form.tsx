@@ -16,7 +16,7 @@ type FormValues = z.infer<ReturnType<typeof buildFormSchema>>
 
 export function useLoginForm() {
   const navigate = useNavigate()
-  const [isLoading, toggleLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   const form = useForm<FormValues>({
     defaultValues: {
       email: 'test1@gmail.com',
@@ -29,14 +29,14 @@ export function useLoginForm() {
 
   const handleSubmit = useCallback(
     async (values: FormValues) => {
-      toggleLoading(true)
+      setIsLoading(true)
       try {
         await authenticate(values)
         return navigate('/', { replace: true })
       } catch (error) {
         handleError(error)
       } finally {
-        toggleLoading(false)
+        setIsLoading(false)
       }
     },
     [authenticate, navigate, handleError],

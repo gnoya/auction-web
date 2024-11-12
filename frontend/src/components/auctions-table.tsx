@@ -5,6 +5,7 @@ import { ColumnDef } from '@tanstack/react-table'
 import { DataTableColumnHeader } from './core/data-table-column-header'
 import { AuctionActions } from './auction-actions'
 import { useEffect, useState } from 'react'
+import { formatCurrency } from '@/lib/format'
 
 export function AuctionsTable() {
   const { data: auctions, isLoading, mutate, pagination } = useAuctions()
@@ -89,9 +90,7 @@ function useAuctionsTableColumns({
           sortable={false}
         />
       ),
-      cell: ({ row }) => (
-        <div>${row.original.startingPrice.toLocaleString('en-US')}</div>
-      ),
+      cell: ({ row }) => formatCurrency(row.original.startingPrice),
       meta: {
         columnToggleLabel: 'Starting Price',
       },
@@ -106,9 +105,7 @@ function useAuctionsTableColumns({
           sortable={false}
         />
       ),
-      cell: ({ row }) => (
-        <div>${row.original.currentPrice.toLocaleString('en-US')}</div>
-      ),
+      cell: ({ row }) => formatCurrency(row.original.currentPrice),
       meta: {
         columnToggleLabel: 'Current Price',
       },

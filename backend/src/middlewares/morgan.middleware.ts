@@ -31,7 +31,7 @@ const customBeforeMorganFormat = (
   res.locals.userId = userId
   res.locals.requestId = requestId
 
-  return `${method} ${url} | Request: ${requestId} | User: ${userId} | IP: ${ipAddress} | Body: ${JSON.stringify(body)}`
+  return `${method} ${url} | RequestID: ${requestId} | User: ${userId} | IP: ${ipAddress} | Body: ${JSON.stringify(body)}`
 }
 
 const customAfterMorganFormat = (
@@ -43,9 +43,9 @@ const customAfterMorganFormat = (
   const url = tokens.url(req, res)
   const status = tokens.status(req, res)
   const responseTime = Math.round(Number(tokens['response-time'](req, res)))
-  const reqId = res.locals.requestId
+  const requestId = res.locals.requestId
 
-  return `${method} ${url} | Request: ${reqId} | Status: ${status} | Time: ${responseTime} ms`
+  return `${method} ${url} | RequestID: ${requestId} | Status: ${status} | Time: ${responseTime} ms`
 }
 
 // ----------------- Morgan Middleware, occurs before the request

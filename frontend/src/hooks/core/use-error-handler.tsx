@@ -17,7 +17,10 @@ export function useErrorHandler() {
       }
       if (error.response) {
         title = error.response?.data.title ?? 'Unknown server error.'
-        message = error.response?.data.detail ?? 'Try again later.'
+        message =
+          error.response?.data?.meta?.reason ||
+          error.response?.data.detail ||
+          'Try again later.'
       }
     } else {
       title = error.name

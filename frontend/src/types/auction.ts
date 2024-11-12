@@ -9,7 +9,7 @@ export type Auction = {
   startingPrice: number
   currentPrice: number
   endTime: string
-  user: User
+  user?: User
   bids: Bid[]
   createdAt: string
   updatedAt: string

@@ -1,4 +1,5 @@
 import { Bid } from '@/types/bid'
+import { parseUser } from './user'
 
 export function parseBids(data: unknown[]): Bid[] {
   return data.map(parseBid)
@@ -6,7 +7,7 @@ export function parseBids(data: unknown[]): Bid[] {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function parseBid(data: any): Bid {
-  const { id, auctionId, userId, amount, createdAt } = data
+  const { id, auctionId, userId, amount, createdAt, user } = data
 
   return {
     id,
@@ -14,5 +15,6 @@ export function parseBid(data: any): Bid {
     userId,
     amount,
     createdAt,
+    user: user && parseUser(user),
   }
 }

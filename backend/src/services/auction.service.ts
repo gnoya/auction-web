@@ -1,4 +1,4 @@
-import { ResourceNotFoundError } from '@/errors/common'
+import { BadRequestError, ResourceNotFoundError } from '@/errors/common'
 import AuctionRepository from '@/repositories/auction.repository'
 import UserRepository from '@/repositories/user.repository'
 import {
@@ -36,6 +36,10 @@ export default class AuctionService {
     const user = await this.userRepository.show(data.userId)
     if (!user)
       throw new ResourceNotFoundError(`User with id ${data.userId} not found`)
+
+    // -------- Check if the end time is in the future
+    if (data.endTime < new Date())
+      throw new BadRequestError('End time must be in the future')
 
     // -------- Create the auction
     const newAuction = await this.auctionRepository.create({

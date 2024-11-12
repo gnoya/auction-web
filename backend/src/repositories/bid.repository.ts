@@ -18,14 +18,18 @@ export default class BidRepository {
     pagination: PaginationResponse
   }> => {
     const { page, limit } = pagination
-    const total = await this.prisma.bid.count()
+    const where = { auctionId }
+    const total = await this.prisma.bid.count({ where })
     const lastPage = Math.ceil(total / limit) || 1
 
     const data = await this.prisma.bid.findMany({
-      where: { auctionId },
+      where,
       include: { user: true },
       skip: (page - 1) * limit,
       take: limit,
+      orderBy: {
+        createdAt: 'desc',
+      },
     })
 
     return {

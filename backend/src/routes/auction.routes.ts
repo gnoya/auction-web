@@ -1,9 +1,12 @@
 import { Router } from 'express'
 import { routeHandler } from '@/utils/routeHandler'
 import AuctionController from '@/controllers/auction.controller'
+import JWTMiddleware from '@/middlewares/jwt.middleware'
 
 const auctionController = new AuctionController()
 const auctionRoutes = Router()
+
+auctionRoutes.use(JWTMiddleware)
 
 auctionRoutes.get('/auctions', routeHandler(auctionController.index))
 auctionRoutes.post('/auctions', routeHandler(auctionController.store))

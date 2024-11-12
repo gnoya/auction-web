@@ -35,7 +35,7 @@ export function AuctionForm({
   return (
     <Form {...form}>
       <form id={formId} onSubmit={onSubmit}>
-        <Fieldset disabled={isLoading} className="relative max-w-xl">
+        <Fieldset disabled={isLoading} className="relative">
           <LoadingOverlay visible={isLoading} />
           <FormField
             control={form.control}
