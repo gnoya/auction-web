@@ -4,9 +4,5 @@ import { useTitle } from '@/hooks/core/use-title'
 export function ListAuctions() {
   useTitle('Auctions')
 
-  return (
-    <div>
-      <AuctionsTable />
-    </div>
-  )
+  return <AuctionsTable />
 }

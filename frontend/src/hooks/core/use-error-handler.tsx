@@ -4,7 +4,6 @@ import { toast } from 'sonner'
 
 export function useErrorHandler() {
   const handleError = useCallback(async (error: unknown) => {
-    console.log('aaaaaaaaaaaaaaaa')
     console.error(error)
     if (!(error instanceof Error)) return
 

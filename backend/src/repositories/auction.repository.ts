@@ -48,7 +48,7 @@ export default class AuctionRepository {
       take: limit,
       where,
       orderBy: {
-        endTime: 'desc',
+        endTime: 'asc',
       },
     })
 

@@ -25,7 +25,7 @@ export function AuctionActions({ auction, onDelete }: AuctionActionsProps) {
 
   return (
     <div className="flex gap-2 align-middle">
-      <Link to={`${auction.id}/edit`} className="flex gap-1">
+      <Link to={`./${auction.id}`} className="flex gap-1">
         <Eye className="h-4 w-4 self-center" />
         View
       </Link>

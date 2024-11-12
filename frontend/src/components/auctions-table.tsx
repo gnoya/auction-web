@@ -129,8 +129,10 @@ function useAuctionsTableColumns({
         const seconds = Math.floor((timeLeft / 1000) % 60)
         const minutes = Math.floor((timeLeft / 1000 / 60) % 60)
         const hours = Math.floor((timeLeft / (1000 * 60 * 60)) % 24)
+        const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24))
         return (
           <div>
+            {days > 0 && `${days}d `}
             {hours.toString().padStart(2, '0')}:
             {minutes.toString().padStart(2, '0')}:
             {seconds.toString().padStart(2, '0')}

@@ -20,13 +20,28 @@ export async function getAuctions(
   }
 }
 
-export async function createAuction(data: unknown, signal?: AbortSignal) {
+export interface CreateAuctionProps {
+  title: string
+  description: string
+  startingPrice: number
+  endTime: string
+}
+
+export async function createAuction(
+  data: CreateAuctionProps,
+  signal?: AbortSignal,
+) {
   return await http.post('/auctions', data, { signal })
+}
+
+export interface UpdateAuctionProps {
+  title?: string
+  description?: string
 }
 
 export async function updateAuction(
   id: number,
-  data: unknown,
+  data: UpdateAuctionProps,
   signal?: AbortSignal,
 ) {
   return await http.put(`/auctions/${id}`, data, { signal })
@@ -45,9 +60,13 @@ export async function getAuction(
   return parseAuction(response.data.data)
 }
 
+export interface PlaceBidProps {
+  amount: number
+}
+
 export async function bidOnAuction(
   id: number,
-  data: unknown,
+  data: PlaceBidProps,
   signal?: AbortSignal,
 ) {
   return await http.post(`/auctions/${id}/bid`, data, { signal })
