@@ -1,4 +1,4 @@
-import { useTitle } from '@/hooks/use-title'
+import { useTitle } from '@/hooks/core/use-title'
 
 export function CreateAuction() {
   useTitle('Create auction')

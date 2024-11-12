@@ -1,4 +1,4 @@
-import { useMediaQuery } from '@/hooks/use-media-query'
+import { useMediaQuery } from '@/hooks/core/use-media-query'
 import { useNavigationLinks } from '@/hooks/use-navigation-links'
 import React, { Dispatch, SetStateAction } from 'react'
 import { NavLink } from 'react-router-dom'

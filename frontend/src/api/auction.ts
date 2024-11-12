@@ -15,7 +15,7 @@ export async function getAuctions(
   })
 
   return {
-    data: parseAuctions(response.data),
+    data: parseAuctions(response.data.data),
     pagination: parsePagination(response.data.pagination),
   }
 }
@@ -42,7 +42,7 @@ export async function getAuction(
 ): Promise<Auction> {
   const response = await http.get(`/auctions/${id}`, { signal })
 
-  return parseAuction(response.data)
+  return parseAuction(response.data.data)
 }
 
 export async function bidOnAuction(
@@ -64,7 +64,7 @@ export async function getAuctionBids(
   })
 
   return {
-    data: parseBids(response.data),
+    data: parseBids(response.data.data),
     pagination: parsePagination(response.data.pagination),
   }
 }

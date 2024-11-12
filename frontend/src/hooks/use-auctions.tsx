@@ -2,7 +2,7 @@ import { getAuctions } from '@/api/auction'
 import { PaginationParams } from '@/types/pagination'
 import { useState } from 'react'
 import useSWR from 'swr'
-import { usePaginationFns } from './use-pagination-fns'
+import { usePaginationFns } from './core/use-pagination-fns'
 
 const fetcher = (
   params: {

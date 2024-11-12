@@ -1,4 +1,4 @@
-import { ThemeToggler } from '@/components/theme-toggler'
+import { ThemeToggler } from '@/components/core/theme-toggler'
 import { Outlet } from 'react-router-dom'
 
 export function AuthLayout() {

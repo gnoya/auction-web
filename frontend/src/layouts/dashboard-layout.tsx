@@ -1,6 +1,6 @@
 import { Header } from '@/components/header'
 import { Sidebar } from '@/components/sidebar'
-import { useTitle } from '@/hooks/use-title'
+import { useTitle } from '@/hooks/core/use-title'
 import { useState } from 'react'
 import { Outlet } from 'react-router-dom'
 

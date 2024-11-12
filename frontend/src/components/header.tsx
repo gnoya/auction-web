@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button'
 import { Typography } from '@/components/ui/typography'
 import { Link, useNavigate } from 'react-router-dom'
 import { clearSWRCache } from '@/lib/clear-swr-cache'
-import { useTheme } from '@/hooks/use-theme'
+import { useTheme } from '@/hooks/core/use-theme'
 import {
   DropdownMenu,
   DropdownMenuContent,

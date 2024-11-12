@@ -1,5 +1,5 @@
-import { Fieldset } from '@/components/fieldset'
-import { SubmitButton } from '@/components/submit-button'
+import { Fieldset } from '@/components/core/fieldset'
+import { SubmitButton } from '@/components/core/submit-button'
 import {
   Form,
   FormControl,
@@ -9,7 +9,7 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Link } from 'react-router-dom'
-import { useLoginForm } from '@/hooks/use-login-form'
+import { useLoginForm } from '@/hooks/forms/use-login-form'
 import { useId } from 'react'
 import { LoadingOverlay } from '../ui/loading-overlay'
 

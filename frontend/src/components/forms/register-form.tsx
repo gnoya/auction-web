@@ -1,4 +1,4 @@
-import { Fieldset } from '@/components/fieldset'
+import { Fieldset } from '@/components/core/fieldset'
 import {
   Form,
   FormControl,
@@ -10,8 +10,8 @@ import { Input } from '@/components/ui/input'
 import { Link } from 'react-router-dom'
 import { LoadingOverlay } from '../ui/loading-overlay'
 import { useId } from 'react'
-import { useRegisterForm } from '@/hooks/use-register-form'
-import { SubmitButton } from '../submit-button'
+import { useRegisterForm } from '@/hooks/forms/use-register-form'
+import { SubmitButton } from '../core/submit-button'
 
 export function RegisterForm() {
   const { form, onSubmit, isLoading } = useRegisterForm()

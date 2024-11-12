@@ -15,7 +15,7 @@ export async function login(
     { signal },
   )
 
-  const { user, token } = response.data
+  const { user, token } = response.data.data
   return { user: parseUser(user), token }
 }
 

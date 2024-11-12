@@ -32,12 +32,24 @@ export default class AuctionRepository {
     pagination: PaginationResponse
   }> => {
     const { page, limit } = pagination
-    const total = await this.prisma.auction.count()
+    const where = {
+      endTime: {
+        gt: new Date(),
+      },
+    }
+
+    const total = await this.prisma.auction.count({
+      where,
+    })
     const lastPage = Math.ceil(total / limit) || 1
 
     const data = await this.prisma.auction.findMany({
       skip: (page - 1) * limit,
       take: limit,
+      where,
+      orderBy: {
+        endTime: 'desc',
+      },
     })
 
     return {

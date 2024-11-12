@@ -6,7 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { useTitle } from '@/hooks/use-title'
+import { useTitle } from '@/hooks/core/use-title'
 
 export function Login() {
   useTitle('Welcome!')

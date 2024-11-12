@@ -1,11 +1,12 @@
-import { useTitle } from '@/hooks/use-title'
+import { AuctionsTable } from '@/components/auctions-table'
+import { useTitle } from '@/hooks/core/use-title'
 
 export function ListAuctions() {
   useTitle('Auctions')
 
   return (
     <div>
-      <h1>ListAuctions</h1>
+      <AuctionsTable />
     </div>
   )
 }
