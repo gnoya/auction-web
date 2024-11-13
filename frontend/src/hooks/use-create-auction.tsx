@@ -18,7 +18,6 @@ export function useCreateAuction() {
         await createAuction({
           ...data,
           startingPrice: parseFloat(data.startingPrice),
-          endTime: '2024-11-13T08:59:59.999Z',
         })
         toast.success('Auction created successfully')
         return navigate('/dashboard/auctions')

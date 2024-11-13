@@ -14,6 +14,7 @@ import {
 import { LoadingOverlay } from '@/components/ui/loading-overlay'
 import { SubmitButton } from '../core/submit-button'
 import { useId } from 'react'
+import { DatePicker } from '../ui/date-picker'
 
 interface AuctionFormProps extends UseAuctionFormProps {
   buttonLabel?: string
@@ -80,8 +81,13 @@ export function AuctionForm({
                 </FormItem>
               )}
             />
-
-            <FormField
+            <DatePicker
+              label="End time"
+              onSelect={(date) => form.setValue('endTime', date.toISOString())}
+              defaultDate={auction ? new Date(auction.endTime) : new Date()}
+              className="flex-1"
+            />
+            {/* <FormField
               control={form.control}
               name="endTime"
               render={({ field }) => (
@@ -96,7 +102,7 @@ export function AuctionForm({
                   <FormMessage />
                 </FormItem>
               )}
-            />
+            /> */}
           </div>
 
           <SubmitButton className="w-full" form={formId}>
