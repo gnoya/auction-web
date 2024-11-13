@@ -12,7 +12,7 @@ export function AuctionsTable({
 }: {
   auctionFetchHook?: () => ReturnType<typeof useAuctions>
 }) {
-  const { data: auctions, isLoading, mutate, pagination } = auctionFetchHook()
+  const { data: auctions, isLoading, pagination } = auctionFetchHook()
   const [currentTime, setCurrentTime] = useState(Date.now())
 
   useEffect(() => {
@@ -24,7 +24,6 @@ export function AuctionsTable({
 
   const columns = useAuctionsTableColumns({
     currentTime,
-    onDelete: mutate,
   })
 
   return (
@@ -44,13 +43,7 @@ export function AuctionsTable({
   )
 }
 
-function useAuctionsTableColumns({
-  currentTime,
-  onDelete,
-}: {
-  currentTime: number
-  onDelete?: () => void
-}) {
+function useAuctionsTableColumns({ currentTime }: { currentTime: number }) {
   const columns: ColumnDef<Auction>[] = [
     {
       id: 'title',
@@ -148,9 +141,7 @@ function useAuctionsTableColumns({
           sortable={false}
         />
       ),
-      cell: ({ row }) => (
-        <AuctionActions auction={row.original} onDelete={onDelete} />
-      ),
+      cell: ({ row }) => <AuctionActions auction={row.original} />,
     },
   ]
 
