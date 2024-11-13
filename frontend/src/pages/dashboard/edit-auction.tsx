@@ -1,5 +1,5 @@
 import { AuctionForm } from '@/components/forms/auction-form'
-import { Card, CardContent } from '@/components/ui/card'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { useTitle } from '@/hooks/core/use-title'
 import { useAuction } from '@/hooks/use-auction'
 import { useEditAuction } from '@/hooks/use-edit-auction'
@@ -13,7 +13,10 @@ export function EditAuction() {
 
   return (
     auction && (
-      <Card className="max-w-xl pt-8">
+      <Card className="max-w-xl">
+        <CardHeader>
+          <CardTitle>Auction information</CardTitle>
+        </CardHeader>
         <CardContent>
           <AuctionForm
             auction={auction}

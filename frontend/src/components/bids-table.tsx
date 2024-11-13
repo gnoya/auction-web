@@ -7,12 +7,10 @@ import { Bid } from '@/types/bid'
 
 export function BidsTable({ auctionId }: { auctionId: number }) {
   const { data: bids, isLoading, pagination } = useBids(auctionId)
-
   const columns = useBidsTableColumns()
 
   return (
     <DataTable
-      toolbar={<BidsTableToolbar />}
       columns={columns}
       data={bids}
       isLoading={isLoading}
@@ -26,10 +24,6 @@ export function BidsTable({ auctionId }: { auctionId: number }) {
       onItemsPerPageChange={pagination.setItemsPerPage}
     />
   )
-}
-
-function BidsTableToolbar() {
-  return <div className="flex items-center justify-end"></div>
 }
 
 function useBidsTableColumns() {

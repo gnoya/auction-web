@@ -48,7 +48,7 @@ export function Auction() {
         <Card className="relative max-w-xl flex-1">
           <LoadingOverlay visible={isUserLoading} />
           <CardHeader>
-            <CardTitle>User</CardTitle>
+            <CardTitle>Owner</CardTitle>
           </CardHeader>
           <CardContent className="grid">
             <Typography>{auctionUser?.name}</Typography>

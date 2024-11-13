@@ -35,7 +35,7 @@ export interface DataTableProps<TData, TValue> {
   onLastPageClick?: () => void
   itemsPerPage?: number
   onItemsPerPageChange?: (itemsPerPage: number) => void
-  toolbar: React.ReactNode
+  toolbar?: React.ReactNode
 }
 export function DataTable<TData, TValue>({
   columns,

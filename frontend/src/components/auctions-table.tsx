@@ -25,7 +25,6 @@ export function AuctionsTable() {
 
   return (
     <DataTable
-      toolbar={<AuctionsTableToolbar />}
       columns={columns}
       data={auctions}
       isLoading={isLoading}
@@ -39,10 +38,6 @@ export function AuctionsTable() {
       onItemsPerPageChange={pagination.setItemsPerPage}
     />
   )
-}
-
-function AuctionsTableToolbar() {
-  return <div className="flex items-center justify-end"></div>
 }
 
 function useAuctionsTableColumns({
