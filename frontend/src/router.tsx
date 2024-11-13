@@ -5,16 +5,16 @@ import { AuthLayout } from '@/layouts/auth-layout'
 import { Login } from '@/pages/auth/login'
 import { Register } from '@/pages/auth/register'
 import { ListAuctions } from '@/pages/dashboard/list-auctions'
-import { Dashboard } from '@/pages/dashboard/dashboard'
 import { Auction } from '@/pages/dashboard/auction'
 import { EditAuction } from '@/pages/dashboard/edit-auction'
 import { CreateAuction } from '@/pages/dashboard/create-auction'
 import { Profile } from './pages/dashboard/profile'
+import { MyAuctions } from './pages/dashboard/my-auctions'
 
 export const router = createBrowserRouter([
   {
     path: '',
-    element: <Navigate to="/dashboard" replace />,
+    element: <Navigate to="/dashboard/auctions" replace />,
   },
   {
     path: 'dashboard',
@@ -24,10 +24,6 @@ export const router = createBrowserRouter([
       </AuthGuard>
     ),
     children: [
-      {
-        path: '',
-        element: <Dashboard />,
-      },
       {
         path: 'profile',
         element: <Profile />,
@@ -42,6 +38,10 @@ export const router = createBrowserRouter([
           {
             path: 'create',
             element: <CreateAuction />,
+          },
+          {
+            path: 'mine',
+            element: <MyAuctions />,
           },
           {
             path: ':id',

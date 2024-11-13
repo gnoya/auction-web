@@ -14,8 +14,8 @@ export function Profile() {
       <CardHeader>
         <CardTitle>Personal info</CardTitle>
       </CardHeader>
-      <CardContent className="flex flex-wrap place-items-center gap-8">
-        <div className="h-28 w-28 text-left">
+      <CardContent className="flex flex-wrap place-items-center gap-6">
+        <div className="h-24 w-24 text-left">
           <Avatar className="h-full w-full rounded-full">
             <AvatarImage
               src="https://picsum.photos/200/200"

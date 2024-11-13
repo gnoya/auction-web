@@ -7,8 +7,12 @@ import { AuctionActions } from './auction-actions'
 import { useEffect, useState } from 'react'
 import { formatCurrency } from '@/lib/format'
 
-export function AuctionsTable() {
-  const { data: auctions, isLoading, mutate, pagination } = useAuctions()
+export function AuctionsTable({
+  auctionFetchHook = useAuctions,
+}: {
+  auctionFetchHook?: () => ReturnType<typeof useAuctions>
+}) {
+  const { data: auctions, isLoading, mutate, pagination } = auctionFetchHook()
   const [currentTime, setCurrentTime] = useState(Date.now())
 
   useEffect(() => {

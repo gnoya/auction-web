@@ -42,6 +42,26 @@ export default class AuctionController {
     return { status: 200, data: auctions, pagination }
   }
 
+  indexMyAuctions = async (
+    req: Request
+  ): Promise<{
+    status: number
+    data: AuctionTransformed[]
+    pagination: PaginationResponse
+  }> => {
+    // -------- Validate the request
+    const paginationParams = await paginationValidator(req)
+
+    // -------- Get the requester userId
+    const myUserId = reqToUserId(req)
+
+    // -------- Get all auctions
+    const { data: auctions, pagination } =
+      await this.auctionService.getAuctionsByUserId(myUserId, paginationParams)
+
+    return { status: 200, data: auctions, pagination }
+  }
+
   show = async (
     req: Request
   ): Promise<{

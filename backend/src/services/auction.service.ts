@@ -67,6 +67,17 @@ export default class AuctionService {
     return { data: transformAuctionArray(auctions), pagination }
   }
 
+  getAuctionsByUserId = async (
+    userId: number,
+    paginationParams: PaginationParams
+  ) => {
+    // -------- Get all auctions by user id paginated
+    const { data: auctions, pagination } =
+      await this.auctionRepository.allPaginated(paginationParams, { userId })
+
+    return { data: transformAuctionArray(auctions), pagination }
+  }
+
   updateAuction = async (
     id: number,
     data: { title?: string; description?: string; userId: number }

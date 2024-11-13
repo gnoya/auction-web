@@ -21,6 +21,21 @@ export async function getAuctions(
   }
 }
 
+export async function getMyAuctions(
+  { pagination }: { pagination?: PaginationParams },
+  signal?: AbortSignal,
+): Promise<{ data: Auction[]; pagination: PaginationResponse }> {
+  const response = await http.get('/auctions/mine', {
+    params: pagination,
+    signal,
+  })
+
+  return {
+    data: parseAuctions(response.data.data),
+    pagination: parsePagination(response.data.pagination),
+  }
+}
+
 export interface CreateAuctionProps {
   title: string
   description: string

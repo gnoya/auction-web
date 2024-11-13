@@ -24,10 +24,13 @@ export default class AuctionRepository {
     return this.prisma.auction.findMany()
   }
 
-  allPaginated = async (pagination: {
-    page: number
-    limit: number
-  }): Promise<{
+  allPaginated = async (
+    pagination: {
+      page: number
+      limit: number
+    },
+    customWhere: Prisma.AuctionWhereInput = {}
+  ): Promise<{
     data: Auction[]
     pagination: PaginationResponse
   }> => {
@@ -36,6 +39,7 @@ export default class AuctionRepository {
       endTime: {
         gt: new Date(),
       },
+      ...customWhere,
     }
 
     const total = await this.prisma.auction.count({

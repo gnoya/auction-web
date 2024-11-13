@@ -9,11 +9,14 @@ const auctionRoutes = Router()
 auctionRoutes.use(JWTMiddleware)
 
 auctionRoutes.get('/auctions', routeHandler(auctionController.index))
+auctionRoutes.get(
+  '/auctions/mine',
+  routeHandler(auctionController.indexMyAuctions)
+)
 auctionRoutes.post('/auctions', routeHandler(auctionController.store))
 auctionRoutes.put('/auctions/:id', routeHandler(auctionController.update))
 auctionRoutes.get('/auctions/:id', routeHandler(auctionController.show))
 auctionRoutes.delete('/auctions/:id', routeHandler(auctionController.destroy))
-
 auctionRoutes.post(
   '/auctions/:id/bid',
   routeHandler(auctionController.placeBid)
