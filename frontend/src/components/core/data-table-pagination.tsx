@@ -30,9 +30,9 @@ export function DataTablePagination({
   onLastPageClick,
 }: DataTablePaginationProps) {
   return (
-    <div className="flex items-center justify-end px-2">
-      <div className="flex items-center space-x-6 lg:space-x-8">
-        <div className="flex items-center space-x-2">
+    <div className="flex items-center justify-end">
+      <div className="flex flex-wrap gap-2">
+        <div className="flex flex-1 items-center justify-end gap-2">
           <p className="text-sm font-medium">Rows per page</p>
           <Select
             value={itemsPerPage?.toString()}
@@ -50,42 +50,45 @@ export function DataTablePagination({
             </SelectContent>
           </Select>
         </div>
-        <div className="flex w-[100px] items-center justify-center text-sm font-medium">
-          Page {currentPage} of {totalPages}
-        </div>
-        <div className="flex items-center space-x-2">
-          <Button
-            variant="outline"
-            className="hidden h-8 w-8 p-0 lg:flex"
-            onClick={onFirstPageClick}
-            disabled={currentPage === 1}
-          >
-            <ArrowLeft className="h-4 w-4" />
-          </Button>
-          <Button
-            variant="outline"
-            className="h-8 w-8 p-0"
-            onClick={onPreviousPageClick}
-            disabled={currentPage === 1}
-          >
-            <ChevronLeft className="h-4 w-4" />
-          </Button>
-          <Button
-            variant="outline"
-            className="h-8 w-8 p-0"
-            onClick={onNextPageClick}
-            disabled={currentPage === totalPages}
-          >
-            <ChevronRight className="h-4 w-4" />
-          </Button>
-          <Button
-            variant="outline"
-            className="hidden h-8 w-8 p-0 lg:flex"
-            onClick={onLastPageClick}
-            disabled={currentPage === totalPages}
-          >
-            <ArrowRight className="h-4 w-4" />
-          </Button>
+
+        <div className="flex flex-1 items-center justify-end gap-2">
+          <div className="flex w-[100px] items-center justify-center text-sm font-medium">
+            Page {currentPage} of {totalPages}
+          </div>
+          <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              className="hidden h-8 w-8 p-0 lg:flex"
+              onClick={onFirstPageClick}
+              disabled={currentPage === 1}
+            >
+              <ArrowLeft className="h-4 w-4" />
+            </Button>
+            <Button
+              variant="outline"
+              className="h-8 w-8 p-0"
+              onClick={onPreviousPageClick}
+              disabled={currentPage === 1}
+            >
+              <ChevronLeft className="h-4 w-4" />
+            </Button>
+            <Button
+              variant="outline"
+              className="h-8 w-8 p-0"
+              onClick={onNextPageClick}
+              disabled={currentPage === totalPages}
+            >
+              <ChevronRight className="h-4 w-4" />
+            </Button>
+            <Button
+              variant="outline"
+              className="hidden h-8 w-8 p-0 lg:flex"
+              onClick={onLastPageClick}
+              disabled={currentPage === totalPages}
+            >
+              <ArrowRight className="h-4 w-4" />
+            </Button>
+          </div>
         </div>
       </div>
     </div>

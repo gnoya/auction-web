@@ -39,7 +39,7 @@ function SidebarContent({ onLinkClick }: SidebarContentProps) {
   const links = useNavigationLinks()
 
   return (
-    <nav className="row-span-full grid h-full grid-rows-[auto_1fr] overflow-y-auto border-r p-4 pt-28">
+    <nav className="row-span-full grid h-full grid-rows-[auto_1fr] overflow-hidden overflow-y-auto p-4 pt-28 md:border-r">
       <ul className="space-y-2">
         {links.map((link) => (
           <SidebarButton

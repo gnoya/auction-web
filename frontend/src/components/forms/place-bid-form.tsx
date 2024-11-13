@@ -44,7 +44,7 @@ export function PlaceBidForm({ auctionId, onBid }: PlaceBidFormProps) {
           />
 
           <SubmitButton
-            className="mt-0 max-w-52 flex-1"
+            className="mt-0 flex-1 md:max-w-52"
             form={formId}
             disabled={isLoading}
           >

@@ -7,7 +7,7 @@ export function MyAuctions() {
   useTitle('My Auctions')
 
   return (
-    <Card>
+    <Card className="w-full">
       <CardHeader>
         <CardTitle>My available auctions</CardTitle>
       </CardHeader>
