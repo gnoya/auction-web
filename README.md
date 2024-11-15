@@ -18,7 +18,7 @@ This repository contains a demo auction web application that shows how I develop
 3. **Running the project:**
 
    - Open a terminal and navigate to the root directory of the project.
-   - Execute `docker-compose up -d` to build the images, start the containers, and run the services in the background.
+   - Execute `docker-compose up` to build the images, start the containers, and run the services.
 
 4. **Accessing the services:**
    - Frontend: `http://localhost:3000`
