@@ -15,12 +15,20 @@ type FormValues = z.infer<ReturnType<typeof buildFormSchema>>
 
 export interface UsePlaceBidFormProps {
   auctionId: number
+  currentPrice: number
   onBid?: () => void
 }
 
-export function usePlaceBidForm({ auctionId, onBid }: UsePlaceBidFormProps) {
+export function usePlaceBidForm({
+  auctionId,
+  currentPrice,
+  onBid,
+}: UsePlaceBidFormProps) {
   const [isLoading, setIsLoading] = useState(false)
   const form = useForm<FormValues>({
+    values: {
+      amount: currentPrice + 1,
+    },
     defaultValues: {
       amount: 0,
     },

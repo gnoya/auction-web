@@ -18,8 +18,16 @@ import {
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface PlaceBidFormProps extends UsePlaceBidFormProps {}
 
-export function PlaceBidForm({ auctionId, onBid }: PlaceBidFormProps) {
-  const { form, onSubmit, isLoading } = usePlaceBidForm({ auctionId, onBid })
+export function PlaceBidForm({
+  auctionId,
+  currentPrice,
+  onBid,
+}: PlaceBidFormProps) {
+  const { form, onSubmit, isLoading } = usePlaceBidForm({
+    auctionId,
+    currentPrice,
+    onBid,
+  })
   const formId = useId()
 
   return (

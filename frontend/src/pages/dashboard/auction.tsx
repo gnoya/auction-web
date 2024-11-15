@@ -73,6 +73,7 @@ export function Auction() {
           {auction && !isMyAuction && (
             <PlaceBidForm
               auctionId={auction.id}
+              currentPrice={auction.currentPrice || 0}
               onBid={() => {
                 mutateAuction()
               }}
