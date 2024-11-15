@@ -24,7 +24,7 @@ module.exports = {
     'src/validators',
   ],
   moduleNameMapper: {
-    '@/config/(.*)': '<rootDir>/config/$1',
+    '@/config/(.*)': '<rootDir>/src/config/$1',
     '@/controllers/(.*)': '<rootDir>/src/controllers/$1',
     '@/services/(.*)': '<rootDir>/src/services/$1',
     '@/middlewares/(.*)': '<rootDir>/src/middlewares/$1',

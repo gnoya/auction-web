@@ -29,7 +29,9 @@ app.use(morganBeforeMiddleware)
 app.use(morganAfterMiddleware)
 
 //------------- healthcheck
-app.get('/api/health-check', (req: Request, res: Response) => res.json('ok'))
+app.get('/api/health-check', (req: Request, res: Response) =>
+  res.json(NODE_ENV)
+)
 
 //------------- routes
 app.use('/api', authRoutes)

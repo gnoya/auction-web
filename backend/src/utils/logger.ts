@@ -52,7 +52,7 @@ const envToLevel = (env: string) => {
     case 'development':
       return 'debug'
     case 'production':
-      return 'http'
+      return 'info'
     case 'test':
       return 'error'
     default:

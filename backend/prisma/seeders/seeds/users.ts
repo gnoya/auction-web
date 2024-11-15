@@ -24,7 +24,11 @@ export default async function seed(prisma: PrismaClient) {
     },
   ]
 
-  return prisma.user.createMany({
-    data: users,
-  })
+  for (const user of users) {
+    await prisma.user.upsert({
+      where: { id: user.id },
+      update: {},
+      create: user,
+    })
+  }
 }

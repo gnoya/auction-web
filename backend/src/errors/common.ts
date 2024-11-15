@@ -49,7 +49,7 @@ export class ConflictError extends Error {
 export class ForbiddenError extends Error {
   constructor(detail?: string) {
     super({
-      status: 403,
+      status: 401,
       title: 'Forbidden',
       detail,
     })
@@ -59,7 +59,7 @@ export class ForbiddenError extends Error {
 export class UnauthorizedError extends Error {
   constructor(detail?: string) {
     super({
-      status: 401,
+      status: 403,
       title: 'Unauthorized',
       detail,
     })
@@ -69,7 +69,7 @@ export class UnauthorizedError extends Error {
 export class BadJWTError extends Error {
   constructor(token: string) {
     super({
-      status: 400,
+      status: 401,
       title: 'Bad JWT',
       detail: 'The request cannot be authorized due to bad JWT Authorization',
       meta: {
@@ -82,7 +82,7 @@ export class BadJWTError extends Error {
 export class InvalidJWTError extends Error {
   constructor(token: string) {
     super({
-      status: 403,
+      status: 401,
       title: 'Invalid JWT',
       detail:
         'The request cannot be authorized, the given JWT was invalid or has expirated',
@@ -96,7 +96,7 @@ export class InvalidJWTError extends Error {
 export class MissingJWTError extends Error {
   constructor() {
     super({
-      status: 400,
+      status: 401,
       title: 'Missing JWT',
       detail: 'Bad request, there was no authorization JWT specified',
     })

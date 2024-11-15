@@ -72,8 +72,8 @@ describe('Profile testing', () => {
     expect(profileResponse.body.data.email).toEqual('test1@gmail.com')
   })
 
-  it('Get my profile with a wrong JWT returns 400', async () => {
+  it('Get my profile with a wrong JWT returns 401', async () => {
     const profileResponse = await getMyProfile('1as15d15asd15a15sd')
-    expect(profileResponse.status).toBe(400)
+    expect(profileResponse.status).toBe(401)
   })
 })

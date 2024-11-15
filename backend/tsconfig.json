@@ -22,7 +22,7 @@
     "strict": true,
     "skipLibCheck": true,
     "paths": {
-      "@/config/*": ["config/*"],
+      "@/config/*": ["src/config/*"],
       "@/controllers/*": ["src/controllers/*"],
       "@/services/*": ["src/services/*"],
       "@/middlewares/*": ["src/middlewares/*"],
@@ -43,8 +43,8 @@
     "tests/**/*",
     "cli/**/*",
     "prisma/**/*",
-    "config/**/*",
-    "app.ts"
+    "src/config/**/*",
+    "src/app.ts"
   ],
   "exclude": []
 }

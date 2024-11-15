@@ -1,0 +1,37 @@
+services:
+  frontend:
+    build: ./frontend
+    restart: always
+    depends_on:
+      - backend
+    ports:
+      - '3000:3000'
+    networks:
+      - network-backend
+  backend:
+    build: ./backend
+    restart: always
+    depends_on:
+      - database
+    ports:
+      - '3100:3100'
+    networks:
+      - network-backend
+  database:
+    image: mysql
+    restart: always
+    volumes:
+      - mysql_data:/data/db
+    env_file:
+      - './backend/.env'
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=true
+    networks:
+      - network-backend
+
+networks:
+  network-backend:
+    driver: bridge
+
+volumes:
+  mysql_data:
